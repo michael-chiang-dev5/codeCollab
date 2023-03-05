@@ -20,13 +20,13 @@ Create docker image from given Dockerfile with:
 docker build -t codecollab-prod -f docker/Dockerfile.dev .
 ```
 
-Run docker container with:
+Run docker container with a given image:
 
 ```
-docker run -p 8090:8080 codecollab-prod
+docker run -p 8080:8080 -p 4444:4444 codecollab-prod
 ```
 
-This creates a container. Port 8090 on localhost is proxied onto port 8080 on the container; you can also proxy localhost:8080 onto docker container :8080.
+This creates a container. Port 8080 on localhost is proxied onto port 8080 on the container.
 
 Log into docker container with interactive shell:
 

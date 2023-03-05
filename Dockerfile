@@ -7,6 +7,7 @@ RUN npm install
 COPY . .
 # this creates bundle.js, index.html in dist/ folder
 RUN npm run build
-EXPOSE 8080
+# 8080 is the express app, 4444 is the signaling server for the collaborative code editor
+EXPOSE 8080 4444
 # npm start runs `nodemon server.ts`, which serves bundled files in dist/ folder on localhost:8080/ 
 CMD ["npm", "start"]
