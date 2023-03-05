@@ -33,3 +33,7 @@ Log into docker container with interactive shell:
 ```
 docker exec -it <CONTAINER_NAME> /bin/bash
 ```
+
+List containers `docker ps`
+
+Kill container `docker stop <CONTAINER_ID>`
