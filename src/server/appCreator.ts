@@ -10,6 +10,7 @@ dotenv.config();
 import { db } from './db/dbPostgreSQL';
 import { passportCreator } from './passportCreator';
 import session from 'express-session';
+import { router } from './authRouter';
 
 export const appCreator = function () {
   const app = express();
@@ -30,6 +31,9 @@ export const appCreator = function () {
   // required to parse post data
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+
+  // routers
+  app.use('/auth', router);
 
   /*
    * Serves production build on route: localhost:8080

@@ -29,7 +29,7 @@ function App() {
 
           <div className={styles.row}>
             <div className={styles.margin}>
-              <a href={`/api`}>log in</a>
+              <a href={`/auth/google`}>log in</a>
             </div>
           </div>
         </div>
