@@ -27,15 +27,11 @@ function App() {
             })}
           </div>
 
-          {/* <div className={styles.row}>
+          <div className={styles.row}>
             <div className={styles.margin}>
-              {userId !== null ? (
-                <a href="http://localhost:8080/auth/logout">logout</a>
-              ) : (
-                <a href={`http://localhost:8080/auth/google`}>log in</a>
-              )}
+              <a href={`/api`}>log in</a>
             </div>
-          </div> */}
+          </div>
         </div>
         <div>
           <Routes>
