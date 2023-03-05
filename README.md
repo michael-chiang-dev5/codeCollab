@@ -17,6 +17,8 @@ To run with Docker:
 
 # For students
 
+git archive -v -o myapp.zip --format=zip HEAD
+
 ```
 npx typedoc --entryPointStrategy expand src/
 ```

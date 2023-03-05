@@ -1,7 +1,7 @@
 ## Create user table
 
 ```
-CREATE TABLE Users
+CREATE TABLE GoogleUserInfo
 (
 _id SERIAL PRIMARY KEY,
 sub TEXT NOT NULL,
