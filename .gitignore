@@ -5,3 +5,5 @@ dist
 /playwright/.cache/
 *.zip
 .env
+docs/client
+docs/server

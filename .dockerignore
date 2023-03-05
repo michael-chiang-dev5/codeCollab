@@ -3,3 +3,7 @@ dist
 /test-results/
 /playwright-report/
 /playwright/.cache/
+*.zip
+.env
+docs/client
+docs/server
