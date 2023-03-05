@@ -45,12 +45,24 @@ export const appCreator = function () {
   app.get('/', (req: Request, res: Response) => {
     return res
       .status(200)
-      .sendFile(path.resolve(__dirname, '../dist/index.html'));
+      .sendFile(path.resolve(__dirname, '../../dist/index.html'));
   });
 
   app.get('/api', async (req: Request, res: Response) => {
     const asdf = await db.getTables();
     return res.status(200).json({ a: asdf });
   });
+
+  // all unrecognized paths get redirected to '/'
+  // This is so that users who enter the app through route that is not '/' will still receive bundle
+  // and React Router (on the frontend) will take care of the rest
+  // Also note we cannot use res.redirect, or else the url itself will be redirected to '/'
+  // See: https://ui.dev/react-router-cannot-get-url-refresh for alternative strategies
+  app.get('/*', function (req, res) {
+    return res
+      .status(200)
+      .sendFile(path.resolve(__dirname, '../../dist/index.html'));
+  });
+
   return app;
 };

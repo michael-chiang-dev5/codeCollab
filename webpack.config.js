@@ -64,10 +64,6 @@ module.exports = {
     proxy: {
       '/api': 'http://localhost:8080',
       '/auth': 'http://localhost:8080',
-      '/signalServerEditor': {
-        target: 'ws://localhost:4444',
-        ws: true,
-      },
       secure: false,
     },
   },
