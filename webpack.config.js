@@ -40,8 +40,9 @@ module.exports = {
       // DO NOT DO THIS!
       // NO NO NO: 'process.env': JSON.stringify(process.env),
       // This is the secure way; only expose non-secret environment variables
-      'process.env.EDITOR_SIGNAL_SERVER_URL':
-        process.env.EDITOR_SIGNAL_SERVER_URL,
+      'process.env.EDITOR_SIGNAL_SERVER_URL': JSON.stringify(
+        process.env.EDITOR_SIGNAL_SERVER_URL
+      ),
     }),
 
     new HtmlWebpackPlugin({
