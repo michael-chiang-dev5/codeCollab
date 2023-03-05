@@ -9,7 +9,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import { db } from './db/dbPostgreSQL';
 import { passportCreator } from './passportCreator';
-import session from 'cookie-session';
+import session from 'express-session';
 import { router } from './authRouter';
 
 export const appCreator = function () {

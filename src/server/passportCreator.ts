@@ -38,7 +38,7 @@ export const passportCreator = function () {
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'http://localhost:8080/auth/google/callback',
+      callbackURL: `${process.env.WEBSITE_URL}auth/google/callback`,
       passReqToCallback: true,
     },
     cb
