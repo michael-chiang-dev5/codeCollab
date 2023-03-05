@@ -33,8 +33,8 @@ const getTables = async () => {
 const getUser = async (sub) => {
   try {
     const sql = `SELECT * 
-    FROM Users
-    WHERE Users.sub=$1`;
+    FROM GoogleUserInfo
+    WHERE GoogleUserInfo.sub=$1`;
     const data = await pgQuery(sql, [sub]);
     if (data.rows.length === 0) {
       return null;
@@ -57,7 +57,7 @@ const createUser = async (args) => {
       args['email'],
       args['email_verified'],
     ];
-    const sql = `INSERT INTO Users
+    const sql = `INSERT INTO GoogleUserInfo
     (sub, picture, email, email_verified)
     VALUES ($1, $2, $3, $4)
     RETURNING *;`;

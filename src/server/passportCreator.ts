@@ -2,6 +2,8 @@ import passport from 'passport';
 import { db } from './db/dbPostgreSQL';
 import dotenv from 'dotenv';
 dotenv.config();
+import oauth from 'passport-google-oauth2';
+const GoogleStrategy = oauth.Strategy;
 
 export const passportCreator = function () {
   // this function takes an OAuth profile and searches the database for
@@ -37,7 +39,6 @@ export const passportCreator = function () {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: 'http://localhost:8080/auth/google/callback',
-      // http://codecollab-env.eba-mxadhirz.us-west-1.elasticbeanstalk.com/
       passReqToCallback: true,
     },
     cb
