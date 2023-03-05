@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "noImplicitAny": true,
+        "module": "commonjs",
+        "target": "ES5",
+        "jsx": "react",
+        "allowJs": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "sourceMap": true
+    },
+    "include": ["src/client/*.ts", "src/client/*.tsx", "src/client/types/css.d.ts", "src/client/components/App.tsx"],
+    "exclude": ["node_modules"]
+}
