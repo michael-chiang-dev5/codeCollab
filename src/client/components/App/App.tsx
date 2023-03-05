@@ -7,6 +7,7 @@ import Room from '../Room/Room';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { actionSetField } from '../../redux/slices/userSlice';
+import { RootState } from '../../redux/store';
 
 // These are the left items on the navbar
 const leftItems = {
@@ -15,6 +16,7 @@ const leftItems = {
 };
 
 function App() {
+  const email = useSelector((state: RootState) => state.user.email);
   const dispatch = useDispatch();
 
   // On mount, get user data
@@ -60,7 +62,11 @@ function App() {
 
           <div className={styles.row}>
             <div className={styles.margin}>
-              <a href={`/auth/google`}>log in</a>
+              {email ? (
+                <a href="/auth/logout">logout</a>
+              ) : (
+                <a href={`/auth/google`}>log in</a>
+              )}
             </div>
           </div>
         </div>
