@@ -3,7 +3,7 @@ import styles from './App.module.css';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { defaultMethod } from 'react-router-dom/dist/dom';
 import { v4 as uuid } from 'uuid';
-import Room from '../Room/Room';
+import CollabCodeEditor from '../CollabCodeEditor/CollabCodeEditor';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { actionSetField } from '../../redux/slices/userSlice';
@@ -72,7 +72,7 @@ function App() {
         </div>
         <div>
           <Routes>
-            <Route path="/room" element={<Room />} />
+            <Route path="/room" element={<CollabCodeEditor />} />
           </Routes>
         </div>
       </BrowserRouter>

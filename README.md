@@ -22,3 +22,13 @@ git archive -v -o myapp.zip --format=zip HEAD
 ```
 npx typedoc --entryPointStrategy expand src/
 ```
+
+# Notes
+
+Default port is :80 on EBS
+Example:
+`codecollab-env.eba-mxadhirz.us-west-1.elasticbeanstalk.com:80/api`
+
+TODO: get proc.env working on frontend
+make signal server code editor not harded coded
+open up multiple ports in docker
