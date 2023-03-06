@@ -25,7 +25,6 @@ const CollabRepl = ({ roomId, cardId }) => {
 
   // This is used to toggle whether the console is shown or not
   const [showConsole, setShowConsole] = useState(false);
-  const [consoleArea, setConsoleArea] = useState('unittests');
 
   return (
     <>
@@ -43,24 +42,12 @@ const CollabRepl = ({ roomId, cardId }) => {
 
         <div
           id="stdout"
-          className={
-            consoleArea === 'stdout'
-              ? `${styles.consoleArea} ${styles.zIndex20}`
-              : `${styles.consoleArea} ${styles.zIndex10}`
-          }
+          className={`${styles.consoleArea} ${styles.zIndex20}`}
           style={showConsole ? { display: 'block' } : { display: 'none' }}
         >
-          <div className={`${styles.consoleHeader}`}>
-            <div
-              className={`${styles.cursor}`}
-              onClick={() => setConsoleArea('stdout')}
-            >
-              stdOut
-            </div>
-          </div>
-          <div id="unitTest">
+          <div>
             <CodeEditor
-              minHeight={131}
+              minHeight={150}
               initialText={stdout}
               theme="dark"
               readOnly={true}
@@ -73,16 +60,16 @@ const CollabRepl = ({ roomId, cardId }) => {
             className={`${styles.consoleButton} ${styles.cursor}`}
             onClick={() => {
               const output = runCode(replData.text);
-              console.log(output);
-              //   if (output.stderr !== '') setStdout(output.stderr);
-              //   else setStdout(output.stdout);
-              //   setShowConsole(true);
-              //   setConsoleArea('stdout');
+              // stdOut holds what will be displayed
+              if (output.stderr !== '') setStdout(output.stderr);
+              else setStdout(output.stdout);
+              setShowConsole(true);
             }}
           >
             run
           </div>
 
+          {/* Toggles the console on and off */}
           <div
             className={`${styles.consoleButton}  ${styles.cursor}`}
             onClick={() => {
@@ -96,7 +83,7 @@ const CollabRepl = ({ roomId, cardId }) => {
       </div>
       <div className={styles.column}>
         <div className={`${styles.row} ${styles.width50}`}></div>
-      </div>{' '}
+      </div>
       {/* end column */}
     </>
   );
