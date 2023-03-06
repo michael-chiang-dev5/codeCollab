@@ -69,7 +69,7 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
 
   // suppose you join a room with people already inside
   // You will invoke callUser() for each user inside the room
-  function callUser(userId) {
+  function callUser(userId: string) {
     console.log('calling user', userId);
     peerRefs.current[userId] = createPeer(userId); // peerRefs = array of rtc connections
     userStream.current // this is your webcam stream (with video and audio track)
@@ -81,7 +81,7 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
       );
   }
 
-  function createPeer(userId) {
+  function createPeer(userId: string) {
     console.log('creating peer');
     const peer = new RTCPeerConnection({
       iceServers: [
@@ -102,7 +102,10 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
     // TODO: refactor and bring handleICECandidateEvent logic into callback
     peer.onicecandidate = (e: RTCPeerConnectionIceEvent) =>
       handleICECandidateEvent(e, userId);
-    peer.ontrack = (e) => handleTrackEvent(e, userId);
+
+    //
+    // https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/track_event
+    peer.ontrack = (e: RTCTrackEvent) => handleTrackEvent(e, userId);
     peer.onnegotiationneeded = () => handleNegotiationNeededEvent(userId);
 
     return peer;
@@ -165,7 +168,10 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
       .catch((e) => console.log(e));
   }
 
-  function handleICECandidateEvent(e, otherId: string) {
+  function handleICECandidateEvent(
+    e: RTCPeerConnectionIceEvent,
+    otherId: string
+  ) {
     if (e.candidate) {
       const payload = {
         target: otherId,
@@ -185,7 +191,7 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
       .catch((e) => console.log(e));
   }
 
-  function handleTrackEvent(e, userId) {
+  function handleTrackEvent(e: RTCTrackEvent, userId: string) {
     // https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/track_event
     // by the time onTrack fires, the new track has already been added
     setStreams((streams) =>
