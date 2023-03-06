@@ -3,8 +3,11 @@ const express = require('express');
 const http = require('http');
 const app = express();
 const httpServer = http.createServer(app);
+// TODO: clean this up. SocketIOServer is not necesary
 const { Server: SocketIoServer } = require('socket.io'); // https://stackoverflow.com/questions/71866234/not-a-constructor-error-if-i-upgrade-socket-io
 const io = new SocketIoServer(httpServer, {
+  // https://stackoverflow.com/questions/29043879/socket-io-with-nginx
+  path: '/signalServerZoom',
   cors: {
     origin: '*',
   },
