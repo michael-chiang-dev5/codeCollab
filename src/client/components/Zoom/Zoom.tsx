@@ -9,14 +9,14 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
   const userData = useSelector((state: RootState) => state.user);
 
   // useRef is used to access the DOM
-  const [streams, setStreams] = useState({}); // array of objects. objs contain stream, userId
+  const [streams, setStreams] = useState<{ [key: string]: MediaStream }>({}); // array of objects. objs contain stream, userId
 
   // useRef is used to persist across re-renders
   // For example, if the component is re-rendered we don't want to re-establish web-rtc connections
-  const peerRefs = useRef({}); // RTCPeerConnection
+  const peerRefs = useRef<{ [key: string]: RTCPeerConnection }>({}); // RTCPeerConnection
   const socketRef = useRef<any>(); // websocket from self to server. TODO: fix type
   const userStream = useRef<MediaStream>(); // peer1 sends this to others
-  const senders = useRef([]); // this stores track, used to switch between webcam and screenshare
+  const senders = useRef([]); // this stores track, used to switch between webcam and screenshare  TODO: remove this
 
   useEffect(() => {
     navigator.mediaDevices // this requires either localhost, or https
@@ -96,14 +96,19 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
       ],
     });
 
-    peer.onicecandidate = (e) => handleICECandidateEvent(e, userId);
+    // When an RTCIceCandidate has been identified, execute callback
+    // The callback has access to RTCPeerConnectionIceEvent
+    // https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/icecandidate_event
+    // TODO: refactor and bring handleICECandidateEvent logic into callback
+    peer.onicecandidate = (e: RTCPeerConnectionIceEvent) =>
+      handleICECandidateEvent(e, userId);
     peer.ontrack = (e) => handleTrackEvent(e, userId);
     peer.onnegotiationneeded = () => handleNegotiationNeededEvent(userId);
 
     return peer;
   }
 
-  function handleNegotiationNeededEvent(userId) {
+  function handleNegotiationNeededEvent(userId: string) {
     peerRefs.current[userId]
       .createOffer()
       .then((offer) => {
@@ -160,7 +165,7 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
       .catch((e) => console.log(e));
   }
 
-  function handleICECandidateEvent(e, otherId) {
+  function handleICECandidateEvent(e, otherId: string) {
     if (e.candidate) {
       const payload = {
         target: otherId,
