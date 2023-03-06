@@ -20,16 +20,39 @@ Create docker image from given Dockerfile with:
 docker build -t codecollab-prod -f docker/Dockerfile.dev .
 ```
 
-Run docker container with:
+Run docker container with a given image:
 
 ```
-docker run -p 8090:8080 codecollab-prod
+docker run -p 8080:8080 -p 4444:4444 codecollab-prod
 ```
 
-This creates a container. Port 8090 on localhost is proxied onto port 8080 on the container; you can also proxy localhost:8080 onto docker container :8080.
+This creates a container. Port 8080 on localhost is proxied onto port 8080 on the container.
 
 Log into docker container with interactive shell:
 
 ```
 docker exec -it <CONTAINER_NAME> /bin/bash
 ```
+
+List containers `docker ps`
+
+Kill container `docker stop <CONTAINER_ID>`
+
+#
+
+ec2 instance: `ssh ec2-user@54.215.164.18`
+
+http://ec2-54-215-164-18.us-west-1.compute.amazonaws.com/
+
+##
+
+This gives a description of how you would configure an nginx proxy
+
+- You don't actually need nginx; you can use proxy the ports directly in docker
+- Unless you want https (which you need for video chat)
+
+https://medium.easyread.co/deploying-go-app-with-nginx-docker-to-aws-ec2-b33d458918fd
+
+## Another guide on how to set up nginx
+
+https://github.com/wmnnd/nginx-certbot

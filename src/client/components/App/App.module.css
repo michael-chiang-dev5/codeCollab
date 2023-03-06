@@ -1,0 +1,19 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .margin {
+    padding:10px;
+  }
+  
+  .navbar {
+    background-color: lightgray;
+    margin-bottom: 20px;
+  }
+  
+  .navbar a {
+   text-decoration: none; 
+   color: black; 
+  }
