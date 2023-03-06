@@ -12,8 +12,8 @@ import Zoom from '../Zoom/Zoom';
 
 // These are the left items on the navbar
 const leftItems = {
-  codeEditor: '/codeEditor',
-  zoom: '/zoom',
+  CollabCodeEditor: '/ComponentCollabCodeEditor',
+  Zoom: '/ComponentZoom',
 };
 
 function App() {
@@ -73,9 +73,12 @@ function App() {
         </div>
         <div>
           <Routes>
-            <Route path="/codeEditor" element={<CollabCodeEditor />} />
             <Route
-              path="/zoom"
+              path="/ComponentCollabCodeEditor"
+              element={<CollabCodeEditor />}
+            />
+            <Route
+              path="/ComponentZoom"
               element={<Zoom roomId={'asdf'} cardId={'asdf'} />}
             />
           </Routes>
