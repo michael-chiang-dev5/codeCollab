@@ -111,6 +111,11 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
     return peer;
   }
 
+  interface OfferType {
+    target: string;
+    caller: string;
+    sdp: RTCSessionDescription;
+  }
   function handleNegotiationNeededEvent(userId: string) {
     peerRefs.current[userId]
       .createOffer()
@@ -118,7 +123,7 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
         return peerRefs.current[userId].setLocalDescription(offer);
       })
       .then(() => {
-        const payload = {
+        const payload: OfferType = {
           target: userId,
           caller: socketRef.current.id,
           sdp: peerRefs.current[userId].localDescription,
@@ -128,7 +133,7 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
       .catch((e) => console.log(e));
   }
 
-  function handleRecieveCall(incoming) {
+  function handleRecieveCall(incoming: OfferType) {
     console.log('receiving call');
     const userId = incoming.caller;
     peerRefs.current[userId] = createPeer(userId);

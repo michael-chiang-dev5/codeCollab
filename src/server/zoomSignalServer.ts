@@ -59,8 +59,10 @@ export const attachZoomSignalServer = function (httpServer: http.Server) {
       }
     });
 
+    // forwards offer from sender to receiver
+    // TODO: payload type is OfferType in Zoom.tsx
     socket.on('offer', (payload) => {
-      console.log('offer');
+      console.log('offer forwarded');
       io.to(payload.target).emit('offer', payload);
     });
 
