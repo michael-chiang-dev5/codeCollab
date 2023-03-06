@@ -5,7 +5,14 @@
 //            Note that each message itself is an array. This is because you can console.log(a,b,c,...)
 //   stderr : array of error message logged to console. This array should have length within [0,1]
 //   rn     : array of return values. This array should have length 1
-export function runCode(codeStr, parseToString = true) {
+
+interface ReplOutputType {
+  stdout: Array<any>[];
+  stderr: string[];
+  rn: any[]; // TODO: should have one elelment, maybe use [any]?
+}
+
+export function runCode(codeStr, parseToString = true): ReplOutputType {
   const stdout = [];
   const stderr = [];
   const rn = [];
@@ -30,7 +37,7 @@ export function runCode(codeStr, parseToString = true) {
   else return res;
 }
 
-function parseRunCodeOutput(obj) {
+function parseRunCodeOutput(obj): ReplOutputType {
   const convertToString = function (item, removeStringQuote = true) {
     const randomString = 'kvfiowklcjwnjknwsdkcbnxm';
     return JSON.stringify(item, (k, v) => {
@@ -57,7 +64,7 @@ function parseRunCodeOutput(obj) {
   rn['stdout'] = stdoutStr;
   rn['stderr'] = stderrStr;
   rn['rn'] = rnStr;
-  return rn;
+  return rn as ReplOutputType;
 }
 
 // // Unit test

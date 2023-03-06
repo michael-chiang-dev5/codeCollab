@@ -9,11 +9,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { actionSetField } from '../../redux/slices/userSlice';
 import { RootState } from '../../redux/store';
 import Zoom from '../Zoom/Zoom';
-
+import CollabRepl from '../CollabRepl/CollabRepl';
 // These are the left items on the navbar
 const leftItems = {
   CollabCodeEditor: '/ComponentCollabCodeEditor',
   Zoom: '/ComponentZoom',
+  CollabRepl: '/ComponentCollabRepl',
 };
 
 function App() {
@@ -80,6 +81,10 @@ function App() {
             <Route
               path="/ComponentZoom"
               element={<Zoom roomId={'asdf'} cardId={'asdf'} />}
+            />
+            <Route
+              path="/ComponentCollabRepl"
+              element={<CollabRepl roomId="1" cardId="2" />}
             />
           </Routes>
         </div>
