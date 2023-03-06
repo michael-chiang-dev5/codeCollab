@@ -19,7 +19,7 @@ const Zoom = ({ roomId, cardId }) => {
   const senders = useRef([]); // this stores track, used to switch between webcam and screenshare
 
   useEffect(() => {
-    navigator.mediaDevices
+    navigator.mediaDevices // this requires either localhost, or https
       .getUserMedia({ audio: false, video: true }) // TODO: audio turned off due to feedback for the time being
       .then((stream) => {
         userStream.current = stream; // this reference is used to send a video to other peer

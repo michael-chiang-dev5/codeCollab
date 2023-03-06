@@ -49,5 +49,10 @@ http://ec2-54-215-164-18.us-west-1.compute.amazonaws.com/
 This gives a description of how you would configure an nginx proxy
 
 - You don't actually need nginx; you can use proxy the ports directly in docker
+- Unless you want https (which you need for video chat)
 
 https://medium.easyread.co/deploying-go-app-with-nginx-docker-to-aws-ec2-b33d458918fd
+
+## Another guide on how to set up nginx
+
+https://github.com/wmnnd/nginx-certbot

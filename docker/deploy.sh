@@ -3,6 +3,6 @@
 # If you want to disconnect this from the terminal: 
 #   nohup sh docker/deploy.sh &
 sudo docker stop $(sudo docker ps -q --filter ancestor=codecollab-prod )
-sudo docker image rm codecollab-prod
+sudo docker image rm codecollab-prod -f
 sudo docker build -t codecollab-prod .
 sudo docker run -p 8080:8080 -p 4444:4444 -p 5555:5555 codecollab-prod
