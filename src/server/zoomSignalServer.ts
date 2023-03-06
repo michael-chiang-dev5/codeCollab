@@ -69,6 +69,8 @@ export const attachZoomSignalServer = function (httpServer: http.Server) {
       io.to(payload.target).emit('answer', payload);
     });
 
+    // forwards ice-candidate from sender to receiver
+    // TODO: incoming type is IceCandidateType in Zoom.tsx
     socket.on('ice-candidate', (incoming) => {
       io.to(incoming.target).emit('ice-candidate', incoming);
     });

@@ -14,7 +14,7 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
   // useRef is used to persist across re-renders
   // For example, if the component is re-rendered we don't want to re-establish web-rtc connections
   const peerRefs = useRef<{ [key: string]: RTCPeerConnection }>({}); // RTCPeerConnection
-  const socketRef = useRef<any>(); // websocket from self to server. TODO: fix type
+  const socketRef = useRef<io.Socket>(); // websocket from self to server
   const userStream = useRef<MediaStream>(); // peer1 sends this to others
   const senders = useRef([]); // this stores track, used to switch between webcam and screenshare  TODO: remove this
 
@@ -61,7 +61,7 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
 
         socketRef.current.on('answer', handleAnswer);
 
-        socketRef.current.on('ice-candidate', (payload) => {
+        socketRef.current.on('ice-candidate', (payload: IceCandidateType) => {
           handleNewICECandidateMsg(payload);
         });
       });
@@ -168,12 +168,18 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
       .catch((e) => console.log(e));
   }
 
+  interface IceCandidateType {
+    target: string;
+    candidate: RTCIceCandidate;
+    caller: string;
+  }
+
   function handleICECandidateEvent(
     e: RTCPeerConnectionIceEvent,
     otherId: string
   ) {
     if (e.candidate) {
-      const payload = {
+      const payload: IceCandidateType = {
         target: otherId,
         candidate: e.candidate,
         caller: socketRef.current.id,
@@ -182,7 +188,7 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
     }
   }
 
-  function handleNewICECandidateMsg(payload) {
+  function handleNewICECandidateMsg(payload: IceCandidateType) {
     const incoming = payload.candidate;
     const candidate = new RTCIceCandidate(incoming);
     const userId = payload.caller;
