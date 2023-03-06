@@ -8,5 +8,4 @@ dist
 .env.EC2
 docs/client
 docs/server
-NOTES.md
 nohup.out

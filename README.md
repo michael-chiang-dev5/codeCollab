@@ -1,42 +1,48 @@
 # Description
 
-This is a minimal template for integrating Docker as a way to deploy your production code.
+CodeCollab is a platform for practicing DSA with other people (think two-player leetcode). Check it out [here](https://code-collab.org). It has the following features:
+
+- collaborative text editing using webRTC and CRDTs
+- javascript frontend nterpreter
+- video chat using webRTC
+- (coming soon) v-tubing using tensorflow.js
 
 ## Instructions
 
-To run normally:
+You need to first set up your environment variables. Rename .env.dev --> .env and fill in your Google Oauth credentials and your database URI. If you don't have these, that is okay you will still be able to test the collaborative features (text editing and video chat).
 
-- `npm install`
-- `npm run dev`
+Next, you can run the app via:
 
-To run with Docker:
+```
+npm install
+npm start
+```
 
+## Other ways to run the app
+
+You can run the dev environment (where Google Oauth doesn't work properly because of the callback url) with:
+
+```
+npm install
+npm run dev
+```
+
+You can also run the app with Docker.
+
+```
 - `docker build -t <IMAGE_NAME> .`
-- `docker run -p 8080:8080 <IMAGE_NAME>`
-- prod should now be served on localhost:8080
-
-# For students
-
-git archive -v -o myapp.zip --format=zip HEAD
-
-```
-npx typedoc --entryPointStrategy expand src/
+- `docker run -p 8080:8080 -p 4444:4444 <IMAGE_NAME>`
 ```
 
-# Notes
+You should now be able to access the app on localhost:8080. This Docker environment is the closest thing to production; it is what is deployed on AWS
 
-Default port is :80 on EBS
-Example:
-`codecollab-env.eba-mxadhirz.us-west-1.elasticbeanstalk.com:80/api`
+## Tech Stack
 
-TODO: get proc.env working on frontend
-make signal server code editor not harded coded
-open up multiple ports in docker
+Frontend: React, Redux, webRTC
+Backend: Express, websockets
+Database: postgreSQL
+CICD: Docker, AWS Codepipeline, AWS CodeBuild, AWS EC2
 
 # socket.io and nginx
 
 https://socket.io/docs/v4/reverse-proxy/
-
-WEBSITE_URL=https://code-collab.org/
-EDITOR_SIGNAL_SERVER_URL=wss://code-collab.org/signalServerEditor/
-ZOOM_SIGNAL_SERVER_URL=wss://code-collab.org/
