@@ -20,16 +20,15 @@ const CollabRepl = ({ roomId, cardId }) => {
     dispatch(actionSetField({ field, value }));
   };
 
-  // standard output
+  // the output from running code is stored here
   const [stdout, setStdout] = useState('');
-
   // This is used to toggle whether the console is shown or not
   const [showConsole, setShowConsole] = useState(false);
 
   return (
     <>
       <div className={styles.mainGrid}>
-        {/* code editor for card "prompt" */}
+        {/* collaborative code editor */}
         <div className={`${styles.prompt}`}>
           <CollabCodeEditor
             minHeight={300}
@@ -40,6 +39,7 @@ const CollabRepl = ({ roomId, cardId }) => {
           />
         </div>
 
+        {/* readonly code editor used to display output of code */}
         <div
           id="stdout"
           className={`${styles.consoleArea} ${styles.zIndex20}`}
@@ -48,13 +48,18 @@ const CollabRepl = ({ roomId, cardId }) => {
           <div>
             <CodeEditor
               minHeight={150}
-              initialText={stdout}
+              initialText={
+                stdout === ''
+                  ? 'make sure you console.log something to see output!'
+                  : stdout
+              }
               theme="dark"
               readOnly={true}
             />
           </div>
         </div>
 
+        {/* bottom bar */}
         <div id="console-bar" className={`${styles.console}`}>
           <div
             className={`${styles.consoleButton} ${styles.cursor}`}
@@ -77,14 +82,10 @@ const CollabRepl = ({ roomId, cardId }) => {
               else setShowConsole(true);
             }}
           >
-            console
+            {showConsole ? 'hide console' : 'show console'}
           </div>
         </div>
       </div>
-      <div className={styles.column}>
-        <div className={`${styles.row} ${styles.width50}`}></div>
-      </div>
-      {/* end column */}
     </>
   );
 };
