@@ -1,9 +1,10 @@
 import { Server } from 'socket.io';
+import http from 'http';
 
 const rooms: { [key: string]: Set<string> } = {};
-const mapSocketToEmail = {};
+const mapSocketToEmail: { [key: string]: string } = {};
 
-export const attachZoomSignalServer = function (httpServer) {
+export const attachZoomSignalServer = function (httpServer: http.Server) {
   // Syntax for socket.io changed in v4
   // https://stackoverflow.com/questions/71866234/not-a-constructor-error-if-i-upgrade-socket-io
   const io = new Server(httpServer, {

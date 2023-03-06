@@ -57,7 +57,7 @@ function parseRunCodeOutput(obj: InternalStorageType): ReplOutputType {
 
   // TODO:  We handle undefined and strings by search replace with uuid. This is could be more elegantly handled with a custom stringfy method
   const stdout = obj['stdout']
-    .map((e) => e.map((e) => convertToString(e, true)))
+    .map((e) => e.map((e: any) => convertToString(e, true)))
     .map((e) => e.join(' '))
     .join('\n');
 
