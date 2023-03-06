@@ -23,7 +23,7 @@ const Zoom = ({ roomId, cardId }) => {
       .getUserMedia({ audio: false, video: true }) // TODO: audio turned off due to feedback for the time being
       .then((stream) => {
         userStream.current = stream; // this reference is used to send a video to other peer
-
+        console.log(process.env.ZOOM_SIGNAL_SERVER_URL);
         socketRef.current = io.connect(process.env.ZOOM_SIGNAL_SERVER_URL);
         console.log('emitting "join room" to server');
         const payload = {
