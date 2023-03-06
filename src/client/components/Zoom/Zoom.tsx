@@ -32,6 +32,7 @@ const Zoom = ({ roomId, cardId }) => {
         };
         socketRef.current.emit('join room', payload);
         socketRef.current.on('connect', () => {
+          console.log('connected');
           setStreams((streams) =>
             Object.assign({}, streams, { [socketRef.current.id]: stream })
           );
@@ -197,7 +198,9 @@ const Zoom = ({ roomId, cardId }) => {
         show streams
       </button>
       <div
-        style={{ display: Object.keys(streams).length <= 1 ? 'none' : 'block' }}
+        style={{
+          display: Object.keys(streams).length <= 1 ? 'block' : 'block', // TODO: always show stream
+        }}
       >
         <div className={styles.column}>
           <div className={styles.row}>

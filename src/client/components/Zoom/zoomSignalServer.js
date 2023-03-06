@@ -33,6 +33,8 @@ app.get('/rooms', (req, res) => {
 });
 
 io.on('connection', (socket) => {
+  console.log('peer connected to signal server');
+
   socket.on('disconnect', (reason) => {
     console.log(socket.id, 'leaving');
     for (let key in rooms) {
