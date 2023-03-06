@@ -8,11 +8,12 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { actionSetField } from '../../redux/slices/userSlice';
 import { RootState } from '../../redux/store';
+import Zoom from '../Zoom/Zoom';
 
 // These are the left items on the navbar
 const leftItems = {
-  library: '/room',
-  rooms: '/room',
+  codeEditor: '/codeEditor',
+  zoom: '/zoom',
 };
 
 function App() {
@@ -72,7 +73,11 @@ function App() {
         </div>
         <div>
           <Routes>
-            <Route path="/room" element={<CollabCodeEditor />} />
+            <Route path="/codeEditor" element={<CollabCodeEditor />} />
+            <Route
+              path="/zoom"
+              element={<Zoom roomId={'asdf'} cardId={'asdf'} />}
+            />
           </Routes>
         </div>
       </BrowserRouter>
