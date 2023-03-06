@@ -29,7 +29,7 @@ const invalid = '#d30102',
 /**
 The editor theme styles for Solarized Dark.
 */
-const createDarkTheme = (minHeight) => {
+const createDarkTheme = (minHeight: number) => {
   const solarizedDarkTheme = EditorView.theme(
     {
       '.cm-gutter, .cm-content': {

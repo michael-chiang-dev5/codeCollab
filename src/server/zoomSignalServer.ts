@@ -59,13 +59,15 @@ export const attachZoomSignalServer = function (httpServer: http.Server) {
       }
     });
 
-    // forwards offer from sender to receiver
-    // TODO: payload type is OfferType in Zoom.tsx
+    // forwards sdp information from sender to receiver
+    // TODO: payload type is SdpType in Zoom.tsx
     socket.on('offer', (payload) => {
       console.log('offer forwarded');
       io.to(payload.target).emit('offer', payload);
     });
-
+    // forwards sdp information from sender to receiver
+    // Note this is the same type as payload in offer event
+    // TODO: payload type is SdpType in Zoom.tsx
     socket.on('answer', (payload) => {
       console.log('answer');
       io.to(payload.target).emit('answer', payload);

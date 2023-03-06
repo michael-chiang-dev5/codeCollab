@@ -111,7 +111,8 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
     return peer;
   }
 
-  interface OfferType {
+  // Type for payload used to send sdp between sender and receiver
+  interface SdpType {
     target: string;
     caller: string;
     sdp: RTCSessionDescription;
@@ -123,7 +124,7 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
         return peerRefs.current[userId].setLocalDescription(offer);
       })
       .then(() => {
-        const payload: OfferType = {
+        const payload: SdpType = {
           target: userId,
           caller: socketRef.current.id,
           sdp: peerRefs.current[userId].localDescription,
@@ -133,7 +134,7 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
       .catch((e) => console.log(e));
   }
 
-  function handleRecieveCall(incoming: OfferType) {
+  function handleRecieveCall(incoming: SdpType) {
     console.log('receiving call');
     const userId = incoming.caller;
     peerRefs.current[userId] = createPeer(userId);
@@ -156,7 +157,7 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
         return peerRefs.current[userId].setLocalDescription(answer);
       })
       .then(() => {
-        const payload = {
+        const payload: SdpType = {
           target: incoming.caller,
           caller: socketRef.current.id,
           sdp: peerRefs.current[userId].localDescription,
@@ -165,7 +166,7 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
       });
   }
 
-  function handleAnswer(message) {
+  function handleAnswer(message: SdpType) {
     const desc = new RTCSessionDescription(message.sdp);
     const userId = message.caller;
     peerRefs.current[userId]

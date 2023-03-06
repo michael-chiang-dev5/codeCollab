@@ -103,8 +103,8 @@ const CollabCodeEditor = ({
   // I think I should think about the difference between creating a document (and writing initial text)
   // versus loading a document (and not writing initial text).
   const ydoc = new Y.Doc();
-  let ytext;
   // Get the text from the shared type
+  let ytext: Y.Text;
   useEffect(() => {
     ytext = ydoc.getText('codemirror');
   }, []);
