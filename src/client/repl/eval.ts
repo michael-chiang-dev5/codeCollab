@@ -7,12 +7,12 @@
 //   rn     : array of return values. This array should have length 1
 
 interface ReplOutputType {
-  stdout: Array<any>[];
-  stderr: string[];
-  rn: any[]; // TODO: should have one elelment, maybe use [any]?
+  stdout: string;
+  stderr: string;
+  rn: string;
 }
 
-export function runCode(codeStr, parseToString = true): ReplOutputType {
+export function runCode(codeStr): ReplOutputType {
   const stdout = [];
   const stderr = [];
   const rn = [];
@@ -33,8 +33,7 @@ export function runCode(codeStr, parseToString = true): ReplOutputType {
     rn,
   };
 
-  if (parseToString) return parseRunCodeOutput(res);
-  else return res;
+  return parseRunCodeOutput(res);
 }
 
 function parseRunCodeOutput(obj): ReplOutputType {

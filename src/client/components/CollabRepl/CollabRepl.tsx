@@ -11,7 +11,7 @@ import styles from './CollabRepl.module.css';
 const CollabRepl = ({ roomId, cardId }) => {
   // getters for Redux state
   // useSelector is a hook that re-renders component everything time selected value changes
-  //   const cardData = useSelector((state) => state.card);
+  const replData = useSelector((state: RootState) => state.repl);
   const userData = useSelector((state: RootState) => state.user);
 
   // callbacks to update redux store
@@ -72,7 +72,8 @@ const CollabRepl = ({ roomId, cardId }) => {
           <div
             className={`${styles.consoleButton} ${styles.cursor}`}
             onClick={() => {
-              //   const output = runCode(cardData.prompt);
+              const output = runCode(replData.text);
+              console.log(output);
               //   if (output.stderr !== '') setStdout(output.stderr);
               //   else setStdout(output.stdout);
               //   setShowConsole(true);
