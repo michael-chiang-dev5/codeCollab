@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CollabCodeEditor from '../CollabCodeEditor/CollabCodeEditor';
 import axios from 'axios';
-// import { actionSetField } from '../../../Redux/slices/cardSlice';
+import { actionSetField } from '../../redux/slices/replSlice';
 import CodeEditor from '../CollabCodeEditor/CodeEditor';
 import { runCode } from '../../repl/eval';
 import { RootState } from '../../redux/store';
@@ -17,27 +17,11 @@ const CollabRepl = ({ roomId, cardId }) => {
   // callbacks to update redux store
   const dispatch = useDispatch();
   const cb = (field, value) => {
-    // dispatch(actionSetField({ field, value }));
+    dispatch(actionSetField({ field, value }));
   };
-
-  // fetch card data
-
-  const [initialCardData, setInitialCardData] = useState({});
-
-  useEffect(() => {
-    axios({
-      method: 'get',
-      withCredentials: true,
-      url: `http://localhost:8080/api/cards/${cardId}`,
-    }).then((res) => {
-      for (let key in res.data) cb(key, res.data[key]);
-      setInitialCardData(res.data);
-    });
-  }, []);
 
   // standard output
   const [stdout, setStdout] = useState('');
-  const [stdunittest, setStdunittest] = useState('');
 
   // This is used to toggle whether the console is shown or not
   const [showConsole, setShowConsole] = useState(false);
@@ -53,8 +37,7 @@ const CollabRepl = ({ roomId, cardId }) => {
             editorID={`prompt-${roomId}-${cardId}`}
             initialText={''}
             theme="light"
-            // cb={(e) => cb('prompt', e)}
-            cb={(e) => {}}
+            cb={(e) => cb('text', e)}
           />
         </div>
 
