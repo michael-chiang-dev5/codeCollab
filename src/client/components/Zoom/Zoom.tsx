@@ -190,13 +190,6 @@ const Zoom = ({ roomId, cardId }) => {
 
   return (
     <>
-      <button
-        onClick={() => {
-          console.log(streams);
-        }}
-      >
-        show streams
-      </button>
       <div
         style={{
           display: Object.keys(streams).length <= 1 ? 'block' : 'block', // TODO: always show stream
