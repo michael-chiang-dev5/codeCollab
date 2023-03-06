@@ -32,3 +32,7 @@ Example:
 TODO: get proc.env working on frontend
 make signal server code editor not harded coded
 open up multiple ports in docker
+
+# socket.io and nginx
+
+https://socket.io/docs/v4/reverse-proxy/
