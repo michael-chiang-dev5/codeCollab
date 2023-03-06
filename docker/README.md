@@ -37,3 +37,17 @@ docker exec -it <CONTAINER_NAME> /bin/bash
 List containers `docker ps`
 
 Kill container `docker stop <CONTAINER_ID>`
+
+#
+
+ec2 instance: `ssh ec2-user@54.215.164.18`
+
+http://ec2-54-215-164-18.us-west-1.compute.amazonaws.com/
+
+##
+
+This gives a description of how you would configure an nginx proxy
+
+- You don't actually need nginx; you can use proxy the ports directly in docker
+
+https://medium.easyread.co/deploying-go-app-with-nginx-docker-to-aws-ec2-b33d458918fd

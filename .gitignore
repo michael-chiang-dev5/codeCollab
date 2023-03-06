@@ -5,5 +5,7 @@ dist
 /playwright/.cache/
 *.zip
 .env
+.env.EC2
 docs/client
 docs/server
+NOTES.md
