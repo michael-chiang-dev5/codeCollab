@@ -51,3 +51,17 @@ It then sends the socket.id of the other user (if it exists) to peer1. It does s
 peer1 has a listener for 'other user'. When it receives this event, it does two things:
 (1) It "calls" the other user
 (2) it stores the socket id of the other user in "other user"
+
+## TODO
+
+### Bug fix
+
+When you use react router to click out, no disconnect signal is sent to the signal server. Then when you re-enter the room, the signal server considers you a new person.
+
+Either disconnect when clicking out, or don't create a new peer when re-entering.
+
+Best way is to disconnect when clicking out, otherwise you may have webcam on without knowing.
+
+One way to do this is to force reload when navigating out.
+
+###
