@@ -5,7 +5,7 @@ import * as io from 'socket.io-client';
 import styles from './Zoom.module.css';
 import { RootState } from '../../redux/store';
 
-const Zoom = ({ roomId, cardId }) => {
+const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
   const userData = useSelector((state: RootState) => state.user);
 
   // useRef is used to access the DOM
@@ -38,7 +38,7 @@ const Zoom = ({ roomId, cardId }) => {
           );
         });
 
-        socketRef.current.on('user left', (userId) => {
+        socketRef.current.on('user left', (userId: string) => {
           console.log(`${userId} left the room`);
           setStreams((streams) => {
             const newStreams = { ...streams };
@@ -47,13 +47,13 @@ const Zoom = ({ roomId, cardId }) => {
           });
         });
 
-        socketRef.current.on('other user', (userId) => {
+        socketRef.current.on('other user', (userId: string) => {
           console.log('other user');
           callUser(userId);
         });
 
         // this function doesn't actually do anything
-        socketRef.current.on('user joined', (userId) => {
+        socketRef.current.on('user joined', (userId: string) => {
           console.log('user joined', userId);
         });
 

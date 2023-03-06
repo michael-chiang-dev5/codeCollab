@@ -12,8 +12,14 @@ interface ReplOutputType {
   rn: string;
 }
 
-export function runCode(codeStr): ReplOutputType {
-  const stdout = [];
+interface InternalStorageType {
+  stdout: any[];
+  stderr: string[];
+  rn: any[];
+}
+
+export function runCode(codeStr: string): ReplOutputType {
+  const stdout: any[] = [];
   const stderr = [];
   const rn = [];
   const logOld = console.log;
@@ -27,7 +33,7 @@ export function runCode(codeStr): ReplOutputType {
   }
   console.log = logOld;
 
-  const res = {
+  const res: InternalStorageType = {
     stdout,
     stderr,
     rn,
@@ -36,8 +42,8 @@ export function runCode(codeStr): ReplOutputType {
   return parseRunCodeOutput(res);
 }
 
-function parseRunCodeOutput(obj): ReplOutputType {
-  const convertToString = function (item, removeStringQuote = true) {
+function parseRunCodeOutput(obj: InternalStorageType): ReplOutputType {
+  const convertToString = function (item: any, removeStringQuote = true) {
     const randomString = 'kvfiowklcjwnjknwsdkcbnxm';
     return JSON.stringify(item, (k, v) => {
       if (v === undefined) return randomString + 'undefined' + randomString;
@@ -50,20 +56,15 @@ function parseRunCodeOutput(obj): ReplOutputType {
   };
 
   // TODO:  We handle undefined and strings by search replace with uuid. This is could be more elegantly handled with a custom stringfy method
-  const stdoutStr = obj['stdout']
+  const stdout = obj['stdout']
     .map((e) => e.map((e) => convertToString(e, true)))
     .map((e) => e.join(' '))
     .join('\n');
 
-  const rnStr = obj['rn'].map((e) => convertToString(e, false)).join('\n');
+  const rn = obj['rn'].map((e) => convertToString(e, false)).join('\n');
+  const stderr = obj['stderr'].join('\n');
 
-  const stderrStr = obj['stderr'].join('\n');
-
-  const rn = {};
-  rn['stdout'] = stdoutStr;
-  rn['stderr'] = stderrStr;
-  rn['rn'] = rnStr;
-  return rn as ReplOutputType;
+  return { stdout, stderr, rn };
 }
 
 // // Unit test

@@ -16,7 +16,7 @@ const CollabRepl = ({ roomId, cardId }: { [key: string]: string }) => {
 
   // callbacks to update redux store
   const dispatch = useDispatch();
-  const cb = (field, value) => {
+  const cb = (field: string, value: any) => {
     dispatch(actionSetField({ field, value }));
   };
 
