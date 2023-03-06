@@ -190,31 +190,20 @@ const Zoom = ({ roomId, cardId }) => {
 
   return (
     <>
-      <div
-        style={{
-          display: Object.keys(streams).length <= 1 ? 'block' : 'block', // TODO: always show stream
-        }}
-      >
-        <div className={styles.column}>
-          <div className={styles.row}>
-            {Object.entries(streams).map((entry) => {
-              const [userId, stream] = entry;
-              return (
-                <div>
-                  <div>{userId}</div>
-                  <video
-                    style={{ height: 100, width: 100 }}
-                    autoPlay
-                    ref={(e) => {
-                      if (e === null) return e;
-                      e.srcObject = stream as MediaProvider; // TODO: clumsy
-                    }}
-                  />
-                </div>
-              );
-            })}
-          </div>
-        </div>
+      <div className={styles.column}>
+        {Object.entries(streams).map((entry) => {
+          const [userId, stream] = entry;
+          return (
+            <video
+              style={{ width: 100 }}
+              autoPlay
+              ref={(e) => {
+                if (e === null) return e;
+                e.srcObject = stream as MediaProvider; // TODO: clumsy
+              }}
+            />
+          );
+        })}
       </div>
     </>
   );

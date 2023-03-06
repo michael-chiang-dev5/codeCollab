@@ -1,13 +1,10 @@
-.row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width:75%;
-}
-
 .column {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
 }
 
+.no-margin {
+    padding: 0;
+    margin: 0;
+}
