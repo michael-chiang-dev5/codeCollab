@@ -116,7 +116,6 @@ const CollabCodeEditor = ({
     //      For some reason, the sinaling server doens't work if accessed from different
     //      browsers when run with node; for now, we run as a module.
     const provider = new WebrtcProvider(editorID, ydoc, {
-      // signaling: ['ws://localhost:4444'],
       signaling: [process.env.EDITOR_SIGNAL_SERVER_URL],
     });
     provider.awareness.setLocalStateField('user', {

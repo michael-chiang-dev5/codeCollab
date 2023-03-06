@@ -24,7 +24,7 @@ const Zoom = ({ roomId, cardId }) => {
       .then((stream) => {
         userStream.current = stream; // this reference is used to send a video to other peer
 
-        socketRef.current = io.connect('http://localhost:5555/');
+        socketRef.current = io.connect(process.env.ZOOM_SIGNAL_SERVER_URL);
         console.log('emitting "join room" to server');
         const payload = {
           roomId: `/${roomId}/${cardId}`,
