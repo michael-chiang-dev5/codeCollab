@@ -36,3 +36,7 @@ open up multiple ports in docker
 # socket.io and nginx
 
 https://socket.io/docs/v4/reverse-proxy/
+
+WEBSITE_URL=https://code-collab.org/
+EDITOR_SIGNAL_SERVER_URL=wss://code-collab.org/signalServerEditor/
+ZOOM_SIGNAL_SERVER_URL=wss://code-collab.org/

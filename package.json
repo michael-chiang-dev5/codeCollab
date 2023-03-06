@@ -5,11 +5,10 @@
   "main": "src/client/index.ts",
   "scripts": {
     "start": "npx kill-port 8080; NODE_ENV=production nodemon ./src/server/server.ts & npx nodemon node_modules/y-webrtc/bin/server.js & nodemon ./src/client/components/Zoom/zoomSignalServer.js",
-    "dev": "NODE_ENV=development nodemon ./src/server/server.ts & NODE_ENV=development webpack serve & npx nodemon node_modules/y-webrtc/bin/server.js",
+    "dev": "npx kill-port 8080; NODE_ENV=development nodemon ./src/server/server.ts & NODE_ENV=development webpack serve & npx nodemon node_modules/y-webrtc/bin/server.js",
     "build": "webpack --mode production",
     "test": "jest --verbose",
-    "test:e2e": "npx playwright test --project='chromium'; npx playwright show-report",
-    "signalServerEditor": "npx nodemon node_modules/y-webrtc/bin/server.js"
+    "test:e2e": "npx playwright test --project='chromium'; npx playwright show-report"
   },
   "keywords": [],
   "author": "Michael Chiang",
