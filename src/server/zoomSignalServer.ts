@@ -16,8 +16,6 @@ export const attachZoomSignalServer = function (httpServer) {
     console.log('peer connected to signal server');
 
     socket.on('disconnect', (reason) => {
-      console.log('rooms', rooms);
-
       console.log(socket.id, 'leaving');
       for (let key in rooms) {
         if (rooms[key].has(socket.id)) {
