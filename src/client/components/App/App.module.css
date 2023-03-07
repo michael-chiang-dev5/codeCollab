@@ -12,6 +12,7 @@
   .navbar {
     background-color: lightgray;
     margin-bottom: 0px;
+    height:40px;
   }
   
   .navbar a {

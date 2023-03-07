@@ -218,7 +218,7 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
           const [userId, stream] = entry;
           return (
             <video
-              style={{ width: 100 }}
+              style={{ height: 100 }}
               autoPlay
               ref={(e) => {
                 if (e === null) return e;
