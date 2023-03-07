@@ -12,7 +12,7 @@ import Zoom from '../Zoom/Zoom';
 import CollabRepl from '../CollabRepl/CollabRepl';
 import Markdown from '../Markdown/Markdown';
 import MarkdownContainer from '../Markdown/Container';
-import LandingPage from '../LandingPage/LandingPage';
+import Room from '../Room/Room';
 
 // These are the left items on the navbar
 const leftItems = {
@@ -91,7 +91,7 @@ function App() {
               path="/ComponentCollabRepl"
               element={<CollabRepl roomId="1" cardId="2" />}
             />
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<Room />} />
           </Routes>
         </div>
       </BrowserRouter>

@@ -6,9 +6,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import Container from '../Markdown/Container';
 import CollabRepl from '../CollabRepl/CollabRepl';
-import styles from './LandingPage.module.css';
+import styles from './Room.module.css';
 import Zoom from '../Zoom/Zoom';
-const LandingPage = () => {
+const Room = () => {
   return (
     <>
       <div className={styles.row}>
@@ -24,4 +24,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default Room;
