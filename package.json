@@ -7,7 +7,7 @@
     "start": "npx kill-port 8080; NODE_ENV=production nodemon ./src/server/server.ts & npx nodemon node_modules/y-webrtc/bin/server.js ",
     "dev": "npx kill-port 8080; NODE_ENV=development nodemon ./src/server/server.ts & NODE_ENV=development webpack serve & npx nodemon node_modules/y-webrtc/bin/server.js",
     "build": "webpack --mode production",
-    "test": "jest --verbose",
+    "test": "jest --verbose ----detectOpenHandles",
     "test:e2e-prod": "URL=https://code-collab.org/ npx playwright test --project='chromium'; npx playwright show-report",
     "test:e2e-dev": "URL=http://localhost:8080/ npx playwright test --project='chromium'; npx playwright show-report"
   },

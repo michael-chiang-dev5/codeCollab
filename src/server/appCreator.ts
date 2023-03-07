@@ -11,11 +11,10 @@ import { db } from './db/dbPostgreSQL';
 import { passportCreator } from './passportCreator';
 import session from 'express-session';
 import { router } from './authRouter';
-const cors = require('cors');
+import cors from 'cors';
 
 export const appCreator = function () {
   const app = express();
-  const PORT = 8080;
 
   // TODO: read up on this
   app.use(
