@@ -7,7 +7,7 @@ import { RootState } from '../../redux/store';
 import Container from '../Markdown/Container';
 import CollabRepl from '../CollabRepl/CollabRepl';
 import styles from './LandingPage.module.css';
-
+import Zoom from '../Zoom/Zoom';
 const LandingPage = () => {
   return (
     <>
@@ -19,6 +19,7 @@ const LandingPage = () => {
           <CollabRepl />
         </div>
       </div>
+      <Zoom />
     </>
   );
 };
