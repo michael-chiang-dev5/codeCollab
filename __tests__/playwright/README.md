@@ -1,4 +1,41 @@
-import { test, expect, type Page } from '@playwright/test';
+# Description
+
+Run playwright e2e tests.
+
+## Instructions on how to run tests on dev
+
+First start up your app
+
+```
+npm run build
+npm start
+```
+
+Then run e2e tests
+
+```
+npm run test:e2e-dev
+```
+
+## Instructions on how to run tests on prod
+
+You don't need to boot up a server, just run:
+
+```
+npm run test:e2e-prod
+```
+
+# Code generator
+
+`npx playwright codegen https://code-collab.org/ComponentCollabRepl`
+
+# TODO:
+
+We don't have any e2e tests for Zoom feature because playwright browser cannot handle webcam. Need to right webcam stream mocks
+
+# Example code:
+
+```
 
 test.beforeEach(async ({ page }) => {
   await page.goto('https://demo.playwright.dev/todomvc');
@@ -56,7 +93,7 @@ test.describe('New Todo', () => {
 
     // create a todo count locator
     const todoCount = page.getByTestId('todo-count')
-  
+
     // Check test using different methods.
     await expect(page.getByText('3 items left')).toBeVisible();
     await expect(todoCount).toHaveText('3 items left');
@@ -260,7 +297,7 @@ test.describe('Counter', () => {
   test('should display the current number of todo items', async ({ page }) => {
     // create a new todo locator
     const newTodo = page.getByPlaceholder('What needs to be done?');
-    
+
     // create a todo count locator
     const todoCount = page.getByTestId('todo-count')
 
@@ -350,7 +387,7 @@ test.describe('Routing', () => {
   });
 
   test('should respect the back button', async ({ page }) => {
-    const todoItem = page.getByTestId('todo-item'); 
+    const todoItem = page.getByTestId('todo-item');
     await page.getByTestId('todo-item').nth(1).getByRole('checkbox').check();
 
     await checkNumberOfCompletedTodosInLocalStorage(page, 1);
@@ -393,7 +430,7 @@ test.describe('Routing', () => {
 
   test('should highlight the currently applied filter', async ({ page }) => {
     await expect(page.getByRole('link', { name: 'All' })).toHaveClass('selected');
-    
+
     //create locators for active and completed links
     const activeLink = page.getByRole('link', { name: 'Active' });
     const completedLink = page.getByRole('link', { name: 'Completed' });
@@ -435,3 +472,4 @@ async function checkTodosInLocalStorage(page: Page, title: string) {
     return JSON.parse(localStorage['react-todos']).map((todo: any) => todo.title).includes(t);
   }, title);
 }
+```

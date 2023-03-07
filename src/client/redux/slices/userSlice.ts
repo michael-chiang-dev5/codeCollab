@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+interface UserStateType {
+  [key: string]: string | number | boolean | null;
+}
+
+const initialState: UserStateType = {
   sub: null,
   picture: null,
   email: null,
@@ -12,7 +16,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    actionSetField: (state, action) => {
+    actionSetField: (state: UserStateType, action) => {
       const { field, value } = action.payload;
       if (Object.keys(state).includes(field) === false) return; // validate field: don't do anything if invalid field
       state[field] = value;

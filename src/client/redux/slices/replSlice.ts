@@ -1,8 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+const initialState: ReplStateType = {
   text: '',
 };
+
+interface ReplStateType {
+  text: string;
+}
 
 export const replSlice = createSlice({
   name: 'repl',
@@ -10,8 +14,9 @@ export const replSlice = createSlice({
   reducers: {
     actionSetField: (state, action) => {
       const { field, value } = action.payload;
-      if (Object.keys(state).includes(field) === false) return; // validate field: don't do anything if invalid field
-      state[field] = value;
+      // validate field: don't do anything if invalid field
+      if (Object.keys(state).includes(field) === false) return;
+      state[field as keyof ReplStateType] = value;
     },
   },
 });

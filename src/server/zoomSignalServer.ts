@@ -1,9 +1,10 @@
 import { Server } from 'socket.io';
+import http from 'http';
 
 const rooms: { [key: string]: Set<string> } = {};
-const mapSocketToEmail = {};
+const mapSocketToEmail: { [key: string]: string } = {};
 
-export const attachZoomSignalServer = function (httpServer) {
+export const attachZoomSignalServer = function (httpServer: http.Server) {
   // Syntax for socket.io changed in v4
   // https://stackoverflow.com/questions/71866234/not-a-constructor-error-if-i-upgrade-socket-io
   const io = new Server(httpServer, {
@@ -58,16 +59,22 @@ export const attachZoomSignalServer = function (httpServer) {
       }
     });
 
+    // forwards sdp information from sender to receiver
+    // TODO: payload type is SdpType in Zoom.tsx
     socket.on('offer', (payload) => {
-      console.log('offer');
+      console.log('offer forwarded');
       io.to(payload.target).emit('offer', payload);
     });
-
+    // forwards sdp information from sender to receiver
+    // Note this is the same type as payload in offer event
+    // TODO: payload type is SdpType in Zoom.tsx
     socket.on('answer', (payload) => {
       console.log('answer');
       io.to(payload.target).emit('answer', payload);
     });
 
+    // forwards ice-candidate from sender to receiver
+    // TODO: incoming type is IceCandidateType in Zoom.tsx
     socket.on('ice-candidate', (incoming) => {
       io.to(incoming.target).emit('ice-candidate', incoming);
     });

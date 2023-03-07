@@ -8,7 +8,7 @@ import { runCode } from '../../repl/eval';
 import { RootState } from '../../redux/store';
 import styles from './CollabRepl.module.css';
 
-const CollabRepl = ({ roomId, cardId }) => {
+const CollabRepl = ({ roomId, cardId }: { [key: string]: string }) => {
   // getters for Redux state
   // useSelector is a hook that re-renders component everything time selected value changes
   const replData = useSelector((state: RootState) => state.repl);
@@ -16,7 +16,7 @@ const CollabRepl = ({ roomId, cardId }) => {
 
   // callbacks to update redux store
   const dispatch = useDispatch();
-  const cb = (field, value) => {
+  const cb = (field: string, value: any) => {
     dispatch(actionSetField({ field, value }));
   };
 

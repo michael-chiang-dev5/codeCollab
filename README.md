@@ -42,7 +42,3 @@ Frontend: React, Redux, webRTC
 Backend: Express, websockets
 Database: postgreSQL
 CICD: Docker, AWS Codepipeline, AWS CodeBuild, AWS EC2
-
-# socket.io and nginx
-
-https://socket.io/docs/v4/reverse-proxy/

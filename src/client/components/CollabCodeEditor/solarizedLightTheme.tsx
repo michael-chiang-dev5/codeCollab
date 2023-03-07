@@ -147,7 +147,7 @@ const solarizedLightHighlightStyle = /*@__PURE__*/ HighlightStyle.define([
 /**
 The editor theme styles for Solarized Light.
 */
-const createThemeLight = (minHeight) => {
+const createThemeLight = (minHeight: number) => {
   const theme = EditorView.theme(
     {
       '.cm-gutter, .cm-content': {

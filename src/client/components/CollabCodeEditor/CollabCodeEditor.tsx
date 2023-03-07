@@ -41,7 +41,7 @@ import { createThemeLight } from './solarizedLightTheme';
 // https://discuss.codemirror.net/t/code-editor-with-automatic-height-that-has-a-minimum-and-maximum-height/4015/3
 
 /*
-MCEditorCollab parameters
+CollabCodeEditor parameters
     editorID    : suppose editor1 with editorID='asdf' is rendered for peer1. If an editor2 with 
                   editorId='asdf' is rendered for peer2, then editor1 and editor2 will share text
                   via CRDTs.
@@ -103,8 +103,8 @@ const CollabCodeEditor = ({
   // I think I should think about the difference between creating a document (and writing initial text)
   // versus loading a document (and not writing initial text).
   const ydoc = new Y.Doc();
-  let ytext;
   // Get the text from the shared type
+  let ytext: Y.Text;
   useEffect(() => {
     ytext = ydoc.getText('codemirror');
   }, []);
@@ -198,7 +198,7 @@ const CollabCodeEditor = ({
     <>
       <div
         ref={editor}
-        className="MCEditorCollab"
+        className="CollabCodeEditor"
         style={hidden ? { display: 'none' } : { display: 'block' }}
       ></div>
     </>

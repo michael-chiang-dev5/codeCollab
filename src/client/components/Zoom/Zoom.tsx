@@ -5,18 +5,18 @@ import * as io from 'socket.io-client';
 import styles from './Zoom.module.css';
 import { RootState } from '../../redux/store';
 
-const Zoom = ({ roomId, cardId }) => {
+const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
   const userData = useSelector((state: RootState) => state.user);
 
   // useRef is used to access the DOM
-  const [streams, setStreams] = useState({}); // array of objects. objs contain stream, userId
+  const [streams, setStreams] = useState<{ [key: string]: MediaStream }>({}); // array of objects. objs contain stream, userId
 
   // useRef is used to persist across re-renders
   // For example, if the component is re-rendered we don't want to re-establish web-rtc connections
-  const peerRefs = useRef({}); // RTCPeerConnection
-  const socketRef = useRef<any>(); // websocket from self to server. TODO: fix type
+  const peerRefs = useRef<{ [key: string]: RTCPeerConnection }>({}); // RTCPeerConnection
+  const socketRef = useRef<io.Socket>(); // websocket from self to server
   const userStream = useRef<MediaStream>(); // peer1 sends this to others
-  const senders = useRef([]); // this stores track, used to switch between webcam and screenshare
+  const senders = useRef([]); // this stores track, used to switch between webcam and screenshare  TODO: remove this
 
   useEffect(() => {
     navigator.mediaDevices // this requires either localhost, or https
@@ -38,7 +38,7 @@ const Zoom = ({ roomId, cardId }) => {
           );
         });
 
-        socketRef.current.on('user left', (userId) => {
+        socketRef.current.on('user left', (userId: string) => {
           console.log(`${userId} left the room`);
           setStreams((streams) => {
             const newStreams = { ...streams };
@@ -47,13 +47,13 @@ const Zoom = ({ roomId, cardId }) => {
           });
         });
 
-        socketRef.current.on('other user', (userId) => {
+        socketRef.current.on('other user', (userId: string) => {
           console.log('other user');
           callUser(userId);
         });
 
         // this function doesn't actually do anything
-        socketRef.current.on('user joined', (userId) => {
+        socketRef.current.on('user joined', (userId: string) => {
           console.log('user joined', userId);
         });
 
@@ -61,7 +61,7 @@ const Zoom = ({ roomId, cardId }) => {
 
         socketRef.current.on('answer', handleAnswer);
 
-        socketRef.current.on('ice-candidate', (payload) => {
+        socketRef.current.on('ice-candidate', (payload: IceCandidateType) => {
           handleNewICECandidateMsg(payload);
         });
       });
@@ -69,7 +69,7 @@ const Zoom = ({ roomId, cardId }) => {
 
   // suppose you join a room with people already inside
   // You will invoke callUser() for each user inside the room
-  function callUser(userId) {
+  function callUser(userId: string) {
     console.log('calling user', userId);
     peerRefs.current[userId] = createPeer(userId); // peerRefs = array of rtc connections
     userStream.current // this is your webcam stream (with video and audio track)
@@ -81,7 +81,7 @@ const Zoom = ({ roomId, cardId }) => {
       );
   }
 
-  function createPeer(userId) {
+  function createPeer(userId: string) {
     console.log('creating peer');
     const peer = new RTCPeerConnection({
       iceServers: [
@@ -96,21 +96,35 @@ const Zoom = ({ roomId, cardId }) => {
       ],
     });
 
-    peer.onicecandidate = (e) => handleICECandidateEvent(e, userId);
-    peer.ontrack = (e) => handleTrackEvent(e, userId);
+    // When an RTCIceCandidate has been identified, execute callback
+    // The callback has access to RTCPeerConnectionIceEvent
+    // https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/icecandidate_event
+    // TODO: refactor and bring handleICECandidateEvent logic into callback
+    peer.onicecandidate = (e: RTCPeerConnectionIceEvent) =>
+      handleICECandidateEvent(e, userId);
+
+    //
+    // https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/track_event
+    peer.ontrack = (e: RTCTrackEvent) => handleTrackEvent(e, userId);
     peer.onnegotiationneeded = () => handleNegotiationNeededEvent(userId);
 
     return peer;
   }
 
-  function handleNegotiationNeededEvent(userId) {
+  // Type for payload used to send sdp between sender and receiver
+  interface SdpType {
+    target: string;
+    caller: string;
+    sdp: RTCSessionDescription;
+  }
+  function handleNegotiationNeededEvent(userId: string) {
     peerRefs.current[userId]
       .createOffer()
       .then((offer) => {
         return peerRefs.current[userId].setLocalDescription(offer);
       })
       .then(() => {
-        const payload = {
+        const payload: SdpType = {
           target: userId,
           caller: socketRef.current.id,
           sdp: peerRefs.current[userId].localDescription,
@@ -120,7 +134,7 @@ const Zoom = ({ roomId, cardId }) => {
       .catch((e) => console.log(e));
   }
 
-  function handleRecieveCall(incoming) {
+  function handleRecieveCall(incoming: SdpType) {
     console.log('receiving call');
     const userId = incoming.caller;
     peerRefs.current[userId] = createPeer(userId);
@@ -143,7 +157,7 @@ const Zoom = ({ roomId, cardId }) => {
         return peerRefs.current[userId].setLocalDescription(answer);
       })
       .then(() => {
-        const payload = {
+        const payload: SdpType = {
           target: incoming.caller,
           caller: socketRef.current.id,
           sdp: peerRefs.current[userId].localDescription,
@@ -152,7 +166,7 @@ const Zoom = ({ roomId, cardId }) => {
       });
   }
 
-  function handleAnswer(message) {
+  function handleAnswer(message: SdpType) {
     const desc = new RTCSessionDescription(message.sdp);
     const userId = message.caller;
     peerRefs.current[userId]
@@ -160,9 +174,18 @@ const Zoom = ({ roomId, cardId }) => {
       .catch((e) => console.log(e));
   }
 
-  function handleICECandidateEvent(e, otherId) {
+  interface IceCandidateType {
+    target: string;
+    candidate: RTCIceCandidate;
+    caller: string;
+  }
+
+  function handleICECandidateEvent(
+    e: RTCPeerConnectionIceEvent,
+    otherId: string
+  ) {
     if (e.candidate) {
-      const payload = {
+      const payload: IceCandidateType = {
         target: otherId,
         candidate: e.candidate,
         caller: socketRef.current.id,
@@ -171,7 +194,7 @@ const Zoom = ({ roomId, cardId }) => {
     }
   }
 
-  function handleNewICECandidateMsg(payload) {
+  function handleNewICECandidateMsg(payload: IceCandidateType) {
     const incoming = payload.candidate;
     const candidate = new RTCIceCandidate(incoming);
     const userId = payload.caller;
@@ -180,7 +203,7 @@ const Zoom = ({ roomId, cardId }) => {
       .catch((e) => console.log(e));
   }
 
-  function handleTrackEvent(e, userId) {
+  function handleTrackEvent(e: RTCTrackEvent, userId: string) {
     // https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/track_event
     // by the time onTrack fires, the new track has already been added
     setStreams((streams) =>
