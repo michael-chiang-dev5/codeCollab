@@ -17,11 +17,8 @@ import Wrapper from '../Room/Wrapper';
 
 // These are the left items on the navbar
 const leftItems = {
-  CollabCodeEditor: '/ComponentCollabCodeEditor',
-  Zoom: '/ComponentZoom',
-  CollabRepl: '/ComponentCollabRepl',
-  Markdown: '/ComponentMarkdown',
-  testRoute: 'room/2/10',
+  Home: '/',
+  Library: '/library',
 };
 
 function App() {
@@ -63,7 +60,7 @@ function App() {
               const [title, url] = e;
               return (
                 <div className={styles.margin} key={uuid()}>
-                  <Link to={url}>{title}</Link>
+                  <a href={url}>{title}</a>
                 </div>
               );
             })}
@@ -94,6 +91,10 @@ function App() {
               element={<CollabRepl roomId="1" cardId="2" />}
             />
             <Route path="/" element={<Room markdownId="1" roomId="0" />} />
+            <Route
+              path="/library"
+              element={<Room markdownId="1" roomId="0" />}
+            />
             <Route path="/room/:markdownId/:roomId" element={<Wrapper />} />
           </Routes>
         </div>

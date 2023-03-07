@@ -63,12 +63,12 @@ export const appCreator = function () {
   //   return res.status(200).json({ a: 'b' });
   // });
 
-  // TODO: I don't think I need this anymore, webpack takes care of it
   // all unrecognized paths get redirected to '/'
   // This is so that users who enter the app through route that is not '/' will still receive bundle
   // and React Router (on the frontend) will take care of the rest
   // Also note we cannot use res.redirect, or else the url itself will be redirected to '/'
   // See: https://ui.dev/react-router-cannot-get-url-refresh for alternative strategies
+  // Unfortunately, we can't get rid of this. Removing makes the `refresh on react route` feature fail
   app.get('/*', function (req, res) {
     console.log(
       'user tried to access unknown path, sending bundle and allowing react router to try to resolve path'
