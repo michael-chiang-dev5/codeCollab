@@ -33,7 +33,7 @@ const createDarkTheme = (minHeight: number) => {
   const solarizedDarkTheme = EditorView.theme(
     {
       '.cm-gutter, .cm-content': {
-        minHeight: `${minHeight}px`,
+        minHeight: `${minHeight}vh`,
         overflow: 'auto',
       },
       '&': {

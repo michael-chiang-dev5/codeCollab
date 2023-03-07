@@ -6,14 +6,19 @@
   
   .margin {
     padding:10px;
+    margin: 0px;
   }
   
   .navbar {
     background-color: lightgray;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
   }
   
   .navbar a {
    text-decoration: none; 
    color: black; 
+  }
+
+  body {
+    margin:0px;
   }

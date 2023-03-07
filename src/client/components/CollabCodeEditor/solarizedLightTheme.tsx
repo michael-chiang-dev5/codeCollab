@@ -151,7 +151,7 @@ const createThemeLight = (minHeight: number) => {
   const theme = EditorView.theme(
     {
       '.cm-gutter, .cm-content': {
-        minHeight: `${minHeight}px`,
+        minHeight: `${minHeight}vh`,
         overflow: 'auto',
       },
       '&': {

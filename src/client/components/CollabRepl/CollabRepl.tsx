@@ -27,17 +27,15 @@ const CollabRepl = ({ roomId, cardId }: { [key: string]: string }) => {
 
   return (
     <>
-      <div className={styles.mainGrid}>
+      <div>
         {/* collaborative code editor */}
-        <div className={`${styles.prompt}`}>
-          <CollabCodeEditor
-            minHeight={300}
-            editorID={`prompt-${roomId}-${cardId}`}
-            initialText={''}
-            theme="light"
-            cb={(e) => cb('text', e)}
-          />
-        </div>
+        <CollabCodeEditor
+          minHeight={80}
+          editorID={`prompt-${roomId}-${cardId}`}
+          initialText={''}
+          theme="light"
+          cb={(e) => cb('text', e)}
+        />
 
         {/* readonly code editor used to display output of code */}
         <div
@@ -47,7 +45,7 @@ const CollabRepl = ({ roomId, cardId }: { [key: string]: string }) => {
         >
           <div>
             <CodeEditor
-              minHeight={150}
+              minHeight={30}
               initialText={
                 stdout === ''
                   ? 'make sure you console.log something to see output!'
