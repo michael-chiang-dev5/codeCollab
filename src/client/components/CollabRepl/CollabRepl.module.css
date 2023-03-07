@@ -1,13 +1,4 @@
 
-    /* 400 is the width of the left markdown panel */
-
-.asdf {
-    /* width:calc(100vw - 400px); */
-}
-
-
-
-
 .console {
     display: flex;
     justify-content: space-between;
