@@ -1,7 +1,9 @@
+/* TODO: rename this to row */
 .column {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: left;
+    height: 100px;
 }
 
 .no-margin {

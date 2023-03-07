@@ -57,7 +57,7 @@ const CollabCodeEditor = ({
   initialText = '',
   hidden = false,
   theme = 'dark',
-  minHeight = 0,
+  minHeight = '0',
 }) => {
   // WHAT: picks a random color to denote user in collaborative editor
   const userColor =
@@ -199,7 +199,7 @@ const CollabCodeEditor = ({
       <div
         ref={editor}
         className="CollabCodeEditor"
-        style={hidden ? { display: 'none' } : { display: 'block' }}
+        // style={hidden ? { display: 'none' } : { display: 'block' }}
       ></div>
     </>
   );

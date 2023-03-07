@@ -10,12 +10,13 @@ dotenv.config();
 import { db } from './db/dbPostgreSQL';
 import { passportCreator } from './passportCreator';
 import session from 'express-session';
-import { router } from './authRouter';
-const cors = require('cors');
+import { router as authRouter } from './authRouter';
+import { router as apiRouter } from './apiRouter';
+
+import cors from 'cors';
 
 export const appCreator = function () {
   const app = express();
-  const PORT = 8080;
 
   // TODO: read up on this
   app.use(
@@ -42,7 +43,8 @@ export const appCreator = function () {
   app.use(express.urlencoded({ extended: true }));
 
   // routers
-  app.use('/auth', router);
+  app.use('/auth', authRouter);
+  app.use('/api', apiRouter);
 
   /*
    * Serves production build on route: localhost:8080
@@ -57,10 +59,9 @@ export const appCreator = function () {
       .sendFile(path.resolve(__dirname, '../../dist/index.html'));
   });
 
-  app.get('/api', async (req: Request, res: Response) => {
-    const asdf = await db.getTables();
-    return res.status(200).json({ a: asdf });
-  });
+  // app.get('/api', async (req: Request, res: Response) => {
+  //   return res.status(200).json({ a: 'b' });
+  // });
 
   // all unrecognized paths get redirected to '/'
   // This is so that users who enter the app through route that is not '/' will still receive bundle
