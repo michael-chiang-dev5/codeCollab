@@ -69,6 +69,9 @@ export const appCreator = function () {
   // Also note we cannot use res.redirect, or else the url itself will be redirected to '/'
   // See: https://ui.dev/react-router-cannot-get-url-refresh for alternative strategies
   app.get('/*', function (req, res) {
+    console.log(
+      'user tried to access unknown path, sending bundle and allowing react router to try to resolve path'
+    );
     return res
       .status(200)
       .sendFile(path.resolve(__dirname, '../../dist/index.html'));

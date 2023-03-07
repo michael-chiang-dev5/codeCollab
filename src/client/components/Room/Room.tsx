@@ -11,10 +11,10 @@ import Zoom from '../Zoom/Zoom';
 
 interface RoomProps {
   markdownId: string;
-  roomID: string;
+  roomId: string;
 }
 
-const Room = ({ markdownId, roomID }: RoomProps) => {
+const Room = ({ markdownId, roomId }: RoomProps) => {
   return (
     <>
       <div className={styles.row}>
