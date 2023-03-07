@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import * as io from 'socket.io-client';
 import styles from './Zoom.module.css';
 import { RootState } from '../../redux/store';
+import { v4 as uuid } from 'uuid';
 
 const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
   const userData = useSelector((state: RootState) => state.user);
@@ -219,6 +220,7 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
           return (
             <video
               autoPlay
+              key={uuid()}
               ref={(e) => {
                 if (e === null) return e;
                 e.srcObject = stream as MediaProvider; // TODO: clumsy
