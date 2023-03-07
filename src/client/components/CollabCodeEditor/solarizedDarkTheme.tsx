@@ -29,12 +29,12 @@ const invalid = '#d30102',
 /**
 The editor theme styles for Solarized Dark.
 */
-const createDarkTheme = (minHeight: number) => {
+const createDarkTheme = (minHeight: string) => {
   // https://codemirror.net/examples/styling/
   const solarizedDarkTheme = EditorView.theme(
     {
       '.cm-gutter, .cm-content': {
-        minHeight: `${minHeight}vh`,
+        minHeight: minHeight,
         overflow: 'auto',
       },
       '&': {

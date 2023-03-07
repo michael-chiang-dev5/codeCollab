@@ -17,7 +17,7 @@ const CodeEditor = ({
   hidden = false,
   theme = 'dark',
   cb = (text: string) => {},
-  minHeight = 0,
+  minHeight = '0',
 }) => {
   const editor = useRef<HTMLDivElement>(null);
 

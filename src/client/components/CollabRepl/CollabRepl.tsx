@@ -29,7 +29,7 @@ const CollabRepl = ({ roomId, cardId }: { [key: string]: string }) => {
     <>
       {/* collaborative code editor */}
       <CollabCodeEditor
-        minHeight={80}
+        minHeight={'80vh'}
         editorID={`prompt-${roomId}-${cardId}`}
         initialText={''}
         theme="light"
@@ -43,7 +43,7 @@ const CollabRepl = ({ roomId, cardId }: { [key: string]: string }) => {
       >
         <div>
           <CodeEditor
-            minHeight={30}
+            minHeight={'30vh'}
             initialText={
               stdout === ''
                 ? 'make sure you console.log something to see output!'
