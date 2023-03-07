@@ -9,3 +9,4 @@ dist
 docs/client
 docs/server
 nohup.out
+SECRET.md
