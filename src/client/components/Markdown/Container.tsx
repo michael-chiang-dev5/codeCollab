@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 
-const Container = ({ markdownId = 1 }) => {
+const Container = ({ markdownId = '1' }) => {
   const dispatch = useDispatch();
   const markdownStr = useSelector((state: RootState) => state.markdown.str);
   // On mount, get markdown (pk=1) from server

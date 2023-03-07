@@ -91,7 +91,7 @@ function App() {
               path="/ComponentCollabRepl"
               element={<CollabRepl roomId="1" cardId="2" />}
             />
-            <Route path="/" element={<Room />} />
+            <Route path="/" element={<Room markdownId="1" roomID="0" />} />
           </Routes>
         </div>
       </BrowserRouter>

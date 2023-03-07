@@ -8,12 +8,18 @@ import Container from '../Markdown/Container';
 import CollabRepl from '../CollabRepl/CollabRepl';
 import styles from './Room.module.css';
 import Zoom from '../Zoom/Zoom';
-const Room = () => {
+
+interface RoomProps {
+  markdownId: string;
+  roomID: string;
+}
+
+const Room = ({ markdownId, roomID }: RoomProps) => {
   return (
     <>
       <div className={styles.row}>
         <div className={styles.left}>
-          <Container />
+          <Container markdownId={markdownId} />
         </div>
         <div className={styles.middle}>
           <CollabRepl />
