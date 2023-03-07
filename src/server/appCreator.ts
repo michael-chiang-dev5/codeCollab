@@ -68,7 +68,11 @@ export const appCreator = function () {
   // and React Router (on the frontend) will take care of the rest
   // Also note we cannot use res.redirect, or else the url itself will be redirected to '/'
   // See: https://ui.dev/react-router-cannot-get-url-refresh for alternative strategies
+  // Unfortunately, we can't get rid of this. Removing makes the `refresh on react route` feature fail
   app.get('/*', function (req, res) {
+    console.log(
+      'user tried to access unknown path, sending bundle and allowing react router to try to resolve path'
+    );
     return res
       .status(200)
       .sendFile(path.resolve(__dirname, '../../dist/index.html'));

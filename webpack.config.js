@@ -32,6 +32,9 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    // publicPath for refresh on react router route
+    // https://ui.dev/react-router-cannot-get-url-refresh
+    publicPath: '/',
   },
   plugins: [
     // DefinePlugin is used to expose .env variables to frontend
@@ -69,6 +72,9 @@ module.exports = {
       '/auth': 'http://localhost:8080',
       secure: false,
     },
+    // historyApiFallback for refresh on react router route
+    // https://ui.dev/react-router-cannot-get-url-refresh
+    historyApiFallback: true,
   },
   optimization: {
     minimizer: [new CssMinimizerPlugin(), new TerserPlugin()],

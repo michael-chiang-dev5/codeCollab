@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CollabCodeEditor from '../CollabCodeEditor/CollabCodeEditor';
-import axios from 'axios';
 import { actionSetField } from '../../redux/slices/replSlice';
 import CodeEditor from '../CollabCodeEditor/CodeEditor';
 import { runCode } from '../../repl/eval';

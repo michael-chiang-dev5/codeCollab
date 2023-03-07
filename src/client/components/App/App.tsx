@@ -12,14 +12,14 @@ import Zoom from '../Zoom/Zoom';
 import CollabRepl from '../CollabRepl/CollabRepl';
 import Markdown from '../Markdown/Markdown';
 import MarkdownContainer from '../Markdown/Container';
-import LandingPage from '../LandingPage/LandingPage';
+import Room from '../Room/Room';
+import Wrapper from '../Room/Wrapper';
+import Library from '../Library/Library';
 
 // These are the left items on the navbar
 const leftItems = {
-  CollabCodeEditor: '/ComponentCollabCodeEditor',
-  Zoom: '/ComponentZoom',
-  CollabRepl: '/ComponentCollabRepl',
-  Markdown: '/ComponentMarkdown',
+  Home: '/',
+  Library: '/library',
 };
 
 function App() {
@@ -61,7 +61,7 @@ function App() {
               const [title, url] = e;
               return (
                 <div className={styles.margin} key={uuid()}>
-                  <Link to={url}>{title}</Link>
+                  <a href={url}>{title}</a>
                 </div>
               );
             })}
@@ -91,7 +91,9 @@ function App() {
               path="/ComponentCollabRepl"
               element={<CollabRepl roomId="1" cardId="2" />}
             />
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<Room markdownId="1" roomId="0" />} />
+            <Route path="/library" element={<Library />} />
+            <Route path="/room/:markdownId/:roomId" element={<Wrapper />} />
           </Routes>
         </div>
       </BrowserRouter>

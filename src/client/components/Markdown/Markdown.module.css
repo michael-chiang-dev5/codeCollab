@@ -1,6 +1,6 @@
 .markdownContainer {
     height: 100%;
     width: 100%;
-    background-color: coral;
+    background-color: rgb(255, 180, 180);
     overflow-y:auto
 }

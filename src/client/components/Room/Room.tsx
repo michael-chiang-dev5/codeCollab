@@ -6,14 +6,20 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import Container from '../Markdown/Container';
 import CollabRepl from '../CollabRepl/CollabRepl';
-import styles from './LandingPage.module.css';
+import styles from './Room.module.css';
 import Zoom from '../Zoom/Zoom';
-const LandingPage = () => {
+
+interface RoomProps {
+  markdownId: string;
+  roomId: string;
+}
+
+const Room = ({ markdownId, roomId }: RoomProps) => {
   return (
     <>
       <div className={styles.row}>
         <div className={styles.left}>
-          <Container />
+          <Container markdownId={markdownId} />
         </div>
         <div className={styles.middle}>
           <CollabRepl />
@@ -24,4 +30,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default Room;
