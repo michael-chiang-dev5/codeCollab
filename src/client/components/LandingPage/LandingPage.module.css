@@ -8,5 +8,6 @@
 
 .middle {
     /* 400 is the width of the left markdown panel */
+    height: 500px;
     width:calc(100vw - 400px);
 }

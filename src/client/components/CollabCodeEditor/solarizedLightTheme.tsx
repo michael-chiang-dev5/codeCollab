@@ -156,8 +156,11 @@ const createThemeLight = (minHeight: string) => {
       },
       '&': {
         color: base00,
+        height: '100%',
+        maxHeight: '100%',
         backgroundColor: background,
       },
+      '.cm-scroller': { overflow: 'auto' },
       '.cm-content': {
         caretColor: cursor,
       },

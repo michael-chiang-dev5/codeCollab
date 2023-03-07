@@ -199,7 +199,7 @@ const CollabCodeEditor = ({
       <div
         ref={editor}
         className="CollabCodeEditor"
-        style={hidden ? { display: 'none' } : { display: 'block' }}
+        // style={hidden ? { display: 'none' } : { display: 'block' }}
       ></div>
     </>
   );
