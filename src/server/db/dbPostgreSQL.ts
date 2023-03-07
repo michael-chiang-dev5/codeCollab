@@ -43,7 +43,7 @@ const getMarkdown = async (_id: number) => {
   }
 };
 
-const getUser = async (sub) => {
+const getUser = async (sub: string) => {
   try {
     const sql = `SELECT * 
     FROM GoogleUserInfo
@@ -62,7 +62,7 @@ const getUser = async (sub) => {
   }
 };
 
-const createUser = async (args) => {
+const createUser = async (args: { [key: string]: string }) => {
   try {
     const arr = [
       args['sub'],

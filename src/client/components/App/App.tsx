@@ -11,6 +11,7 @@ import { RootState } from '../../redux/store';
 import Zoom from '../Zoom/Zoom';
 import CollabRepl from '../CollabRepl/CollabRepl';
 import Markdown from '../Markdown/Markdown';
+import MarkdownContainer from '../Markdown/Container';
 
 // These are the left items on the navbar
 const leftItems = {
@@ -89,10 +90,7 @@ function App() {
               path="/ComponentCollabRepl"
               element={<CollabRepl roomId="1" cardId="2" />}
             />
-            <Route
-              path="/"
-              element={<Markdown markdown={'# Description \n Hellow world'} />}
-            />
+            <Route path="/" element={<MarkdownContainer />} />
           </Routes>
         </div>
       </BrowserRouter>
