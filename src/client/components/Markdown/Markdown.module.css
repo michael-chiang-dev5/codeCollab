@@ -1,6 +1,6 @@
 .markdownContainer {
-    height: 80vh;
-    width: 400px;
+    height: 100%;
+    width: 100%;
     background-color: coral;
     overflow-y:auto
 }

@@ -12,7 +12,7 @@ const LandingPage = () => {
   return (
     <>
       <div className={styles.row}>
-        <div>
+        <div className={styles.left}>
           <Container />
         </div>
         <div className={styles.middle}>

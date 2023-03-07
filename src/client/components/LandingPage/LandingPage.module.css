@@ -6,8 +6,17 @@
 
 }
 
-.middle {
+.left {
+    /* -40px for the navbar, -100px for the zoom */
+    /* we CANNOT do 100vh - 40px , you must combine px for syntax to work */
+    height:calc(100vh - 140px);
 
+    /* 400 is the width of the left markdown panel */
+    width:400px;
+}
+
+/* TODO: rename this to right */
+.middle {
     /* -40px for the navbar, -30px for the console bar, -100px for the zoom */
     /* we CANNOT do 100vh - 40px - 30px - 100px, you must combine px for syntax to work */
     height:calc(100vh - 170px);
