@@ -5,3 +5,7 @@
     justify-content: left;
 
 }
+
+.middle {
+    width:calc(100vw - 400px);
+}

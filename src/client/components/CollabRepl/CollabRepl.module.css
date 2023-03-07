@@ -1,22 +1,11 @@
-.column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+    /* 400 is the width of the left markdown panel */
+
+.asdf {
+    /* width:calc(100vw - 400px); */
 }
 
-.rowButton {
-    text-align: center;
-    height: 25px;
-    font-size: 20px;
-    color: white;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    grid-row-start: 1;
-    grid-row-end: 2;
-    grid-column-start: 2;
-    grid-column-end: 3;    
-}
+
 
 
 .console {
@@ -25,56 +14,13 @@
     background-color: lightgray;
     color: black;
     text-align: center;
-    grid-row-start: 4;
-    grid-row-end: 5;
-    grid-column-start: 2;
-    grid-column-end: 3;
     z-index: 100;
-    border-radius: 7px;
 }
 
-.consoleArea {
-    background-color: white;
-    grid-row-start: 3;
-    grid-row-end: 4;
-    grid-column-start: 2;
-    grid-column-end: 3;
-}
-
-.zIndex10 {
-    z-index: 10;
-}
 
 .cursor:hover {
     background-color: lightsalmon;
     cursor: pointer;
-
-}
-
-.zIndex20 {
-z-index: 20;
-}
-
-.consoleHeader {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background-color: black;
-    color: white;
-}
-
-.row {
-    width:100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-}
-.row2 {
-    width:100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
 
 }
 

@@ -15,7 +15,7 @@ const LandingPage = () => {
         <div>
           <Container />
         </div>
-        <div>
+        <div className={styles.middle}>
           <CollabRepl />
         </div>
       </div>
