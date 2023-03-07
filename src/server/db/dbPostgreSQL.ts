@@ -24,6 +24,21 @@ const pgQuery = (text: string, params: any[]) => {
   return pool.query(text, params);
 };
 
+import { MarkdownsWithMetaDataType } from '../../types/types';
+
+const getMarkdownsWithMetadata = async () => {
+  try {
+    const sql = `SELECT Markdown._id,title,difficulty,str FROM Markdown
+    INNER JOIN MarkdownMetadata ON MarkdownMetadata.markdown_id=Markdown._id;`;
+    const data = await pgQuery(sql, []);
+    const rows: MarkdownsWithMetaDataType = data.rows;
+    return rows;
+  } catch (err) {
+    console.log(err);
+    return undefined;
+  }
+};
+
 const getMarkdown = async (_id: number) => {
   try {
     const sql = `SELECT * 
@@ -85,4 +100,10 @@ const createUser = async (args: { [key: string]: string }) => {
 // db is an interface to interact with database
 // We do it like this so it is easy to swap databases
 //   pool can be used to forcibly disconnect
-export const db = { pool, getUser, createUser, getMarkdown };
+export const db = {
+  pool,
+  getUser,
+  createUser,
+  getMarkdown,
+  getMarkdownsWithMetadata,
+};

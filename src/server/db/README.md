@@ -18,3 +18,13 @@ _id SERIAL PRIMARY KEY,
 str TEXT NOT NULL
 );
 ```
+
+```
+CREATE TABLE MarkdownMetadata
+(
+_id SERIAL PRIMARY KEY,
+markdown_id INTEGER REFERENCES Markdown (_id) NOT NULL,
+title TEXT NULL,
+difficulty REAL NULL
+);
+```
