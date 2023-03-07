@@ -2,7 +2,7 @@
 
 Run playwright e2e tests.
 
-## Instructions
+## Instructions on how to run tests on dev
 
 First start up your app
 
@@ -14,7 +14,15 @@ npm start
 Then run e2e tests
 
 ```
-npm run test:e2e
+npm run test:e2e-dev
+```
+
+## Instructions on how to run tests on prod
+
+You don't need to boot up a server, just run:
+
+```
+npm run test:e2e-prod
 ```
 
 # Code generator
