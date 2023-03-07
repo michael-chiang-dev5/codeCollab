@@ -10,3 +10,11 @@ email TEXT NOT NULL,
 email_verified BOOLEAN NULL
 );
 ```
+
+```
+CREATE TABLE Markdown
+(
+_id SERIAL PRIMARY KEY,
+str TEXT NOT NULL
+);
+```

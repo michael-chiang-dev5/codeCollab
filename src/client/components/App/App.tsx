@@ -10,11 +10,14 @@ import { actionSetField } from '../../redux/slices/userSlice';
 import { RootState } from '../../redux/store';
 import Zoom from '../Zoom/Zoom';
 import CollabRepl from '../CollabRepl/CollabRepl';
+import Markdown from '../Markdown/Markdown';
+
 // These are the left items on the navbar
 const leftItems = {
   CollabCodeEditor: '/ComponentCollabCodeEditor',
   Zoom: '/ComponentZoom',
   CollabRepl: '/ComponentCollabRepl',
+  Markdown: '/ComponentMarkdown',
 };
 
 function App() {
@@ -85,6 +88,10 @@ function App() {
             <Route
               path="/ComponentCollabRepl"
               element={<CollabRepl roomId="1" cardId="2" />}
+            />
+            <Route
+              path="/"
+              element={<Markdown markdown={'# Description \n Hellow world'} />}
             />
           </Routes>
         </div>

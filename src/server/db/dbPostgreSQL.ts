@@ -24,10 +24,23 @@ const pgQuery = (text: string, params: any[]) => {
   return pool.query(text, params);
 };
 
-const getTables = async () => {
-  const sql = 'SELECT * FROM information_schema.tables;';
-  const data = await pgQuery(sql, []);
-  return data.rows;
+const getMarkdown = async (_id: number) => {
+  try {
+    const sql = `SELECT * 
+    FROM Markdown
+    WHERE Markdown._id=$1`;
+    const data = await pgQuery(sql, [_id]);
+    if (data.rows.length === 0) {
+      return null;
+    } else if (data.rows.length === 1) {
+      return data.rows[0];
+    } else {
+      throw `db.getMarkdown: you should get 0 or 1 element when filtering by primary key`;
+    }
+  } catch (err) {
+    console.log(err);
+    return undefined;
+  }
 };
 
 const getUser = async (sub) => {
@@ -72,4 +85,4 @@ const createUser = async (args) => {
 // db is an interface to interact with database
 // We do it like this so it is easy to swap databases
 //   pool can be used to forcibly disconnect
-export const db = { pool, getTables, getUser, createUser };
+export const db = { pool, getUser, createUser, getMarkdown };
