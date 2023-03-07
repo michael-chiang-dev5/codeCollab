@@ -63,6 +63,7 @@ export const appCreator = function () {
   //   return res.status(200).json({ a: 'b' });
   // });
 
+  // TODO: I don't think I need this anymore, webpack takes care of it
   // all unrecognized paths get redirected to '/'
   // This is so that users who enter the app through route that is not '/' will still receive bundle
   // and React Router (on the frontend) will take care of the rest
