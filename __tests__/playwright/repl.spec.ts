@@ -7,7 +7,6 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('repl evalutes function correctly', async ({ page }) => {
-  await page.goto('https://code-collab.org/ComponentCollabRepl');
   await page.getByRole('textbox').click();
   await page
     .getByRole('textbox')
