@@ -2,8 +2,8 @@ import { test, expect, type Page } from '@playwright/test';
 import dotenv from 'dotenv';
 dotenv.config();
 
-test('api/markdown/library endpoint works', async ({ page }) => {
-  await page.goto(`${process.env.URL}api/markdown/library`);
+test('api/markdown/all endpoint works', async ({ page }) => {
+  await page.goto(`${process.env.URL}api/markdown/all`);
   //   const html = await page.content();
   await expect(page.getByText('Challenge 1')).toHaveCount(1);
 });

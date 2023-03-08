@@ -14,12 +14,12 @@ import Markdown from '../Markdown/Markdown';
 import MarkdownContainer from '../Markdown/Container';
 import Room from '../Room/Room';
 import Wrapper from '../Room/Wrapper';
-import Library from '../Library/Library';
+import LobbyNewRoom from '../LobbyNewRoom/LobbyNewRoom';
 
 // These are the left items on the navbar
 const leftItems = {
   Home: '/',
-  Library: '/library',
+  'New room': '/lobbyNewRoom',
 };
 
 function App() {
@@ -92,7 +92,7 @@ function App() {
               element={<CollabRepl roomId="1" cardId="2" />}
             />
             <Route path="/" element={<Room markdownId="1" roomId="0" />} />
-            <Route path="/library" element={<Library />} />
+            <Route path="/lobbyNewRoom" element={<LobbyNewRoom />} />
             <Route path="/room/:markdownId/:roomId" element={<Wrapper />} />
           </Routes>
         </div>

@@ -4,7 +4,7 @@ import { db } from './db/dbPostgreSQL';
 import { ErrorType } from '../types/types';
 
 // This returns a list of all markdowns with their associated metadata
-router.get('/markdown/library', async (req, res, next) => {
+router.get('/markdown/all', async (req, res, next) => {
   try {
     const rows = await db.getMarkdownsWithMetadata();
     return res.status(200).json(rows);
@@ -12,7 +12,7 @@ router.get('/markdown/library', async (req, res, next) => {
     const errObj: ErrorType = {
       message: err,
       status: 500,
-      location: '/api/markdown/library',
+      location: '/api/markdown/all',
     };
     return next(errObj);
   }

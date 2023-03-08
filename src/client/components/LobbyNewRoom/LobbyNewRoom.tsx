@@ -2,18 +2,18 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, redirect, useNavigate } from 'react-router-dom';
-import styles from './Library.module.css';
+import styles from './LobbyNewRoom.module.css';
 import { MarkdownsWithMetaDataType } from '../../../types/types';
 import { v4 as uuid } from 'uuid';
 
-const Library = () => {
+const LobbyNewRoom = () => {
   const [markdowns, setMarkdowns] = useState<MarkdownsWithMetaDataType>([]);
   // on page load, get list of markdowns (and their associated metadata) from backennd
   useEffect(() => {
     const response = axios({
       method: 'get',
       withCredentials: true,
-      url: '/api/markdown/library',
+      url: '/api/markdown/all',
       // we cannot use async/await in useEffect without wrapping in outer function
     }).then((res) => {
       const data: MarkdownsWithMetaDataType = res.data;
@@ -36,4 +36,4 @@ const Library = () => {
   );
 };
 
-export default Library;
+export default LobbyNewRoom;

@@ -27,9 +27,9 @@ describe('api endpoints', () => {
     expect(response.status).toEqual(200);
   });
 
-  it('GET "/api/markdown/library" response is 200', async () => {
+  it('GET "/api/markdown/all" response is 200', async () => {
     const app = appCreator();
-    const response = await request(app).get('/api/markdown/library');
+    const response = await request(app).get('/api/markdown/all');
     expect(response.status).toEqual(200);
   });
 
