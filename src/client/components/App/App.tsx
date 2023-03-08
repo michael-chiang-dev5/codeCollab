@@ -31,33 +31,33 @@ import {
 } from 'unique-names-generator';
 
 function App() {
-  const email = useSelector((state: RootState) => state.user.email);
+  const sub = useSelector((state: RootState) => state.user.sub);
   const dispatch = useDispatch();
-
   // On mount, get user data
   useEffect(() => {
     // we cannot use async/await in useEffect without wrapping in outer function
     const response = axios({
       method: 'get',
       withCredentials: true,
-      url: 'auth/user',
+      url: `${process.env.WEBSITE_URL}auth/user`,
     })
       .then((res) => {
         if (res.data) {
           const data: UserType = res.data;
           dispatch(actionSetField({ field: 'sub', value: data.sub }));
           dispatch(actionSetField({ field: 'picture', value: data.picture }));
-          dispatch(actionSetField({ field: 'email', value: data.email }));
           dispatch(actionSetField({ field: '_id', value: data._id }));
 
           // if anonymous user, give them a random email
           if (data.email === '') {
             const anonName = uniqueNamesGenerator({
-              dictionaries: [adjectives, animals, colors], // colors can be omitted here as not used
+              dictionaries: [adjectives, animals],
               separator: '-',
               length: 2,
             });
             dispatch(actionSetField({ field: 'email', value: anonName }));
+          } else {
+            dispatch(actionSetField({ field: 'email', value: data.email }));
           }
         }
       })
@@ -81,7 +81,7 @@ function App() {
 
           <div className={styles.row}>
             <div className={styles.margin}>
-              {email ? (
+              {sub !== '' ? (
                 <a href="/auth/logout">logout</a>
               ) : (
                 <a href={`/auth/google`}>log in</a>

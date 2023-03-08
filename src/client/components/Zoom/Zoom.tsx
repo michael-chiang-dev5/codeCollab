@@ -8,6 +8,7 @@ import { v4 as uuid } from 'uuid';
 
 const Zoom = ({ roomId }: { [key: string]: string }) => {
   const userData = useSelector((state: RootState) => state.user);
+  const email = useSelector((state: RootState) => state.user.email);
 
   // useRef is used to access the DOM
   const [streams, setStreams] = useState<{ [key: string]: MediaStream }>({}); // array of objects. objs contain stream, userId
@@ -27,7 +28,8 @@ const Zoom = ({ roomId }: { [key: string]: string }) => {
 
         socketRef.current = io.connect(process.env.ZOOM_SIGNAL_SERVER_URL);
         console.log('emitting "join room" to server');
-        console.log(roomId);
+        console.log(userData);
+        console.log(email);
         const payload = {
           roomId: roomId,
           email: userData.email,

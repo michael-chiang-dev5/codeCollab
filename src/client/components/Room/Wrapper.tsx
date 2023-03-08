@@ -7,11 +7,7 @@ import Room from './Room';
 const Wrapper = () => {
   const { markdownId, roomId } = useParams();
   console.log('in wrapper');
-  return (
-    <>
-      <Room markdownId={markdownId} roomId={roomId} />;
-    </>
-  );
+  return <>{/* <Room markdownId={markdownId} roomId={roomId} />; */}</>;
 };
 
 export default Wrapper;

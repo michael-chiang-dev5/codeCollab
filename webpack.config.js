@@ -49,6 +49,7 @@ module.exports = {
       'process.env.ZOOM_SIGNAL_SERVER_URL': JSON.stringify(
         process.env.ZOOM_SIGNAL_SERVER_URL
       ),
+      'process.env.WEBSITE_URL': JSON.stringify(process.env.WEBSITE_URL),
     }),
 
     new HtmlWebpackPlugin({
