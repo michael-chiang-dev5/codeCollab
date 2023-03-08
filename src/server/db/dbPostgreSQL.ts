@@ -60,20 +60,14 @@ const getMarkdown = async (_id: number) => {
 */
 
 import { UserType } from '../../types/types';
-const getUser = async (sub: string): Promise<UserType | null> => {
+const getUsersBySub = async (sub: string): Promise<UserType[]> => {
   try {
     const sql = `SELECT * 
     FROM GoogleUserInfo
     WHERE GoogleUserInfo.sub=$1`;
     const data = await pgQuery(sql, [sub]);
     const rows: UserType[] = data.rows;
-
-    // 1 user is found in local database. User has used app before
-    if (rows.length === 1) return rows[0];
-    // 0 users found in local database, user is brand new
-    else if (rows.length === 0) return null;
-    // more than 1 user found in the database. This should not happen
-    else throw `db.getUser: more than one user`;
+    return rows;
   } catch (err) {
     console.log(err);
     return undefined;
@@ -105,7 +99,7 @@ const createUser = async (args: { [key: string]: string }) => {
 //   pool can be used to forcibly disconnect
 export const db = {
   pool,
-  getUser,
+  getUsersBySub,
   createUser,
   getMarkdown,
   getMarkdownsWithMetadata,

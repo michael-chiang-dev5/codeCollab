@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 import oauth from 'passport-google-oauth2';
 import { Request } from 'express';
+import { UserType } from '../types/types';
+
 export const passportCreator = function () {
   // this function takes an OAuth profile and searches the database for
   // a matching user. If found, the function returns the user info. If
@@ -22,22 +24,22 @@ export const passportCreator = function () {
     // next is for express, done is for passport. They do differ slightly. A good writeup on the differences between next() and done(): https://stackoverflow.com/questions/26164837/difference-between-done-and-next-in-node-js-callbacks
     done: Function // there should be a type for this, but passport doesn't seem to have a type for done
   ) => {
-    const userInfo = await db.getUser(profile.sub);
-    // check if user is found
-    if (userInfo) {
-      // the first  argument of done is err. You must set err to null or else
-      // user will not be authenticated
-      return done(null, userInfo);
-    } else if (userInfo === null) {
+    const userData: UserType = { _id: null, ...profile._json };
+
+    const users = await db.getUsersBySub(userData.sub);
+    console.log('**', users);
+
+    if (users.length === 0) {
       // user not found so add user to db
-      // profile._json contains the following fields:
-      //   sub, picture, email, email_verified
       const _id = await db.createUser(profile._json);
       return done(null, { ...profile._json, _id });
-    } else if (userInfo === undefined) {
-      // this means there was an error with db.getUser. TODO: test for error object
-      return done(null, { ...profile._json, _id: null });
+    } else {
+      // user found
+      // the first  argument of done is err. You must set err to null or else
+      // user will not be authenticated
+      return done(null, users[0]);
     }
+    // TODO: consider error checking for >1 user found for a given sub
   };
 
   const GoogleStrategy = oauth.Strategy;
