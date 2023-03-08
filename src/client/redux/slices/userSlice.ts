@@ -1,11 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { setProperty } from './util';
-import {
-  uniqueNamesGenerator,
-  adjectives,
-  colors,
-  animals,
-} from 'unique-names-generator';
 
 interface User {
   sub: string;
@@ -14,16 +8,11 @@ interface User {
   email_verified: boolean;
   _id: number;
 }
-const anonName = uniqueNamesGenerator({
-  dictionaries: [adjectives, animals],
-  separator: '-',
-  length: 2,
-});
 
 const initialState: User = {
   sub: null,
   picture: null,
-  email: anonName,
+  email: null,
   email_verified: null,
   _id: null,
 };

@@ -66,7 +66,7 @@ const Zoom = ({ roomId }: { [key: string]: string }) => {
           handleNewICECandidateMsg(payload);
         });
       });
-  }, [email]);
+  }, [email]); // we re-run on email change so that the signal server has a fresh name to go with the socket id. Otherwise,
 
   // suppose you join a room with people already inside
   // You will invoke callUser() for each user inside the room
