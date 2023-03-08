@@ -21,8 +21,8 @@ router.get('/markdown/library', async (req, res, next) => {
 router.get('/markdown/:id', async (req, res, next) => {
   try {
     const _id = Number(req.params.id);
-    const row = await db.getMarkdown(_id);
-    return res.status(200).send(row);
+    const rows = await db.getMarkdowns(_id);
+    return res.status(200).send(rows);
   } catch (err) {
     const errObj: ErrorType = {
       message: err,

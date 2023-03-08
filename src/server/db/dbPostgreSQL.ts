@@ -1,6 +1,8 @@
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
 dotenv.config();
+import { MarkdownsWithMetaDataType } from '../../types/types';
+import { MarkdownType } from '../../types/types';
 
 const pool = new Pool({
   connectionString: process.env.PG_URI,
@@ -30,8 +32,6 @@ const pgQuery = async (
   return rows;
 };
 
-import { MarkdownsWithMetaDataType } from '../../types/types';
-
 const getMarkdownsWithMetadata = async () => {
   const sql = `SELECT Markdown._id,title,difficulty,str FROM Markdown
     INNER JOIN MarkdownMetadata ON MarkdownMetadata.markdown_id=Markdown._id;`;
@@ -39,18 +39,14 @@ const getMarkdownsWithMetadata = async () => {
   return rows;
 };
 
-const getMarkdown = async (_id: number) => {
+const getMarkdowns = async (_id: number) => {
   const sql = `SELECT * 
     FROM Markdown
     WHERE Markdown._id=$1`;
-  const rows = await pgQuery(sql, [_id]);
-  if (rows.length === 0) {
-    return null;
-  } else if (rows.length === 1) {
-    return rows[0];
-  } else {
-    throw `db.getMarkdown: you should get 0 or 1 element when filtering by primary key`;
-  }
+  const rows = (await pgQuery(sql, [_id])) as MarkdownType[];
+  if (rows.length > 1)
+    throw `db.getMarkdowns: you should get 0 or 1 element when filtering by primary key`;
+  return rows;
 };
 
 /*
@@ -62,8 +58,8 @@ const getMarkdown = async (_id: number) => {
           a: No users are found, ie, this is the first time the user has used the app
           b: One user is found, ie the user has used the app before
           c: More than one user is found ,this should not happen since sub should be a primary key for google auth
-*/
-
+  Note that we handle errors explicitly here; this is because passport calls this function and does not have access to our global error handler
+  */
 import { UserType } from '../../types/types';
 const getUsersBySub = async (sub: string): Promise<UserType[]> => {
   try {
@@ -74,10 +70,10 @@ const getUsersBySub = async (sub: string): Promise<UserType[]> => {
     return rows;
   } catch (err) {
     console.log(err);
-    return undefined;
   }
 };
 
+// Note that we handle errors explicitly here; this is because passport calls this function and does not have access to our global error handler
 const createUser = async (userData: UserType): Promise<UserType> => {
   try {
     const params = [
@@ -105,6 +101,6 @@ export const db = {
   pool,
   getUsersBySub,
   createUser,
-  getMarkdown,
+  getMarkdowns,
   getMarkdownsWithMetadata,
 };

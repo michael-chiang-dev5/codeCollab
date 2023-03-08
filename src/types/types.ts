@@ -20,4 +20,9 @@ export interface UserType {
   email_verified: boolean;
 }
 
+export interface MarkdownType {
+  _id: number;
+  str: string;
+}
+
 export type MarkdownsWithMetaDataType = MarkdownWithMetaDataType[];
