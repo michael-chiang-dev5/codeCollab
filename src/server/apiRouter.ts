@@ -7,7 +7,7 @@ import { ErrorType } from '../types/types';
 router.get('/markdown/library', async (req, res, next) => {
   try {
     const rows = await db.getMarkdownsWithMetadata();
-    return res.status(200).send(rows);
+    return res.status(200).json(rows);
   } catch (err) {
     const errObj: ErrorType = {
       message: err,
@@ -22,7 +22,8 @@ router.get('/markdown/:id', async (req, res, next) => {
   try {
     const _id = Number(req.params.id);
     const rows = await db.getMarkdowns(_id);
-    return res.status(200).send(rows);
+    if (rows.length === 0) throw 'markdown id not found in database';
+    return res.status(200).json(rows);
   } catch (err) {
     const errObj: ErrorType = {
       message: err,

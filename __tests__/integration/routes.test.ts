@@ -19,3 +19,25 @@ describe('Auth endpoints', () => {
     expect(response.status).toEqual(200);
   });
 });
+
+describe('api endpoints', () => {
+  it('GET "/api/markdown/1" response is 200', async () => {
+    const app = appCreator();
+    const response = await request(app).get('/api/markdown/1');
+    expect(response.status).toEqual(200);
+  });
+
+  it('GET "/api/markdown/library" response is 200', async () => {
+    const app = appCreator();
+    const response = await request(app).get('/api/markdown/library');
+    expect(response.status).toEqual(200);
+  });
+
+  // Jest does not play nice with the global error handler so test is commented out
+  // Guess we have to hand it in e2e
+  // it('GET "/api/markdown/nonexistent" response is 500', async () => {
+  //   const app = appCreator();
+  //   const response = await request(app).get('/api/markdown/nonexistent');
+  //   expect(response.status).toEqual(500);
+  // });
+});
