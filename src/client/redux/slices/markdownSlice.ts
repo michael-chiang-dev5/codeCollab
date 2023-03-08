@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { setProperty } from './util';
 
-const initialState: MarkdownStateType = {
+const initialState: Markdown = {
   str: '',
 };
 
-interface MarkdownStateType {
+interface Markdown {
   str: string;
 }
 
@@ -14,7 +14,7 @@ export const markdownSlice = createSlice({
   initialState,
   reducers: {
     actionSetField: (state, action) => {
-      const field: keyof MarkdownStateType = action.payload.field;
+      const field: keyof Markdown = action.payload.field;
       const value = action.payload.value;
       if (Object.keys(state).includes(field) === false) return; // validate field: don't do anything if invalid field. I don't know if this is actually necessary with typescript
       setProperty(state, field, value);
