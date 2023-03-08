@@ -10,7 +10,7 @@ test.beforeEach(async ({ page }) => {
 test('refresh on react router route works', async ({ page }) => {
   await expect(
     page.getByText(
-      'Welcome to Code-Collab! This is a webapp where you can grind DSA with other people. To get started, scroll down to the bottom and select a category you want to practice.'
+      "If you want to contribute to this project, message @michael-chiang-dev5 on LinkedIn and we'll figure something out!"
     )
   ).toHaveCount(1);
 });
