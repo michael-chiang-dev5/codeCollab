@@ -50,7 +50,13 @@ export const attachZoomSignalServer = function (httpServer: http.Server) {
           for (let otherUser of Array.from(rooms[roomId])) {
             socket.to(otherUser).emit('user left', socket.id);
           }
-          db.insertOrUpdateRoom(roomId, rooms[roomId].size, '');
+          const usernames = usernamesInRoom(roomId);
+          db.insertOrUpdateRoom(
+            roomId,
+            rooms[roomId].size,
+            '',
+            JSON.stringify(usernames)
+          );
         }
       }
     });
@@ -74,8 +80,12 @@ export const attachZoomSignalServer = function (httpServer: http.Server) {
         }
       }
       const usernames = usernamesInRoom(roomId);
-      console.log(usernames);
-      db.insertOrUpdateRoom(roomId, rooms[roomId].size, '');
+      db.insertOrUpdateRoom(
+        roomId,
+        rooms[roomId].size,
+        '',
+        JSON.stringify(usernames)
+      );
     });
 
     // forwards sdp information from sender to receiver

@@ -32,4 +32,5 @@ export interface RoomType {
   roomId: string;
   countusers: number;
   title: string;
+  users: string;
 }

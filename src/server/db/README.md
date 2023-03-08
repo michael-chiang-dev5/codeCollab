@@ -37,13 +37,7 @@ CREATE TABLE Rooms
 _id SERIAL PRIMARY KEY,
 roomId TEXT UNIQUE,
 countusers INTEGER NOT NULL,
-title TEXT NULL
+title TEXT NULL,
+users TEXT NOT NULL
 );
-```
-
-```
-INSERT INTO Rooms (roomId, countusers, title)
-VALUES ('aaa', 2, 'mytitle')
-ON CONFLICT (roomId)
-DO UPDATE SET countusers = EXCLUDED.countusers, title = EXCLUDED.title
 ```

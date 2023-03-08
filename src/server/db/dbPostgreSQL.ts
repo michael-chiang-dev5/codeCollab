@@ -96,15 +96,16 @@ const createUser = async (userData: UserType): Promise<UserType> => {
 const insertOrUpdateRoom = async (
   roomId: string,
   countusers: number,
-  title: string
+  title: string,
+  users: string
 ): Promise<RoomType> => {
   try {
-    const sql = `INSERT INTO Rooms (roomId, countusers, title)
-    VALUES ($1, $2, $3)
+    const sql = `INSERT INTO Rooms (roomId, countusers, title, users)
+    VALUES ($1, $2, $3, $4)
     ON CONFLICT (roomId)
-    DO UPDATE SET countusers = EXCLUDED.countusers, title = EXCLUDED.title
+    DO UPDATE SET countusers = EXCLUDED.countusers, title = EXCLUDED.title, users = EXCLUDED.users
     RETURNING *`;
-    const rows = await pgQuery(sql, [roomId, countusers, title]);
+    const rows = await pgQuery(sql, [roomId, countusers, title, users]);
     const row = rows[0] as RoomType;
     return row;
   } catch (err) {

@@ -20,7 +20,15 @@ const LobbyJoinRoom = () => {
   return (
     <>
       {rooms.map((room) => {
-        return <div key={uuid()}>{`${room.countusers}`}</div>;
+        const users: string = JSON.parse(room.users).join(', ');
+        // 4 is the markdownId for the markdown that explains room entry
+        const url = process.env.WEBSITE_URL + '4/' + room.roomId;
+        return (
+          <div className="room" key={uuid()}>
+            <div className="userList">{users}</div>
+            <a href={url}>Join</a>
+          </div>
+        );
       })}
     </>
   );
