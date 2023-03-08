@@ -11,7 +11,20 @@ import { db } from './db/dbPostgreSQL';
    tells us there are two users in room "flash-aardvark"
 */
 const rooms: { [key: string]: Set<string> } = {};
+/*
+  mapSocketToEmail maps socketId to usernames
+  For example: 
+    'CxWs' : 'past-gamefowl'
+    'lhli' : 'lesser-cattle'
+
+*/
 const mapSocketToEmail: { [key: string]: string } = {};
+
+const usernamesInRoom = function (roomId: string) {
+  const room = rooms[roomId];
+  const socketIds = Array.from(room);
+  return socketIds.map((socket) => mapSocketToEmail[socket]);
+};
 
 export const attachZoomSignalServer = function (httpServer: http.Server) {
   // since we are starting up the server, clear all rooms from database
@@ -43,22 +56,13 @@ export const attachZoomSignalServer = function (httpServer: http.Server) {
     });
 
     socket.on('join room', (payload) => {
-      const roomID = payload.roomId;
+      const roomId = payload.roomId;
       mapSocketToEmail[socket.id] = payload.email;
-      if (rooms[roomID]) rooms[roomID].add(socket.id);
-      else rooms[roomID] = new Set([socket.id]);
-
-      console.log(payload.email);
-
-      console.log(
-        `user ${socket.id} joined room`,
-        roomID,
-        `with ${rooms[roomID]?.size ?? 0} other users`,
-        `(${rooms[roomID] ? Array.from(rooms[roomID]) : 'empty room'})`
-      );
+      if (rooms[roomId]) rooms[roomId].add(socket.id);
+      else rooms[roomId] = new Set([socket.id]);
 
       // need to deep copy
-      const setUsers = new Set(rooms[roomID]);
+      const setUsers = new Set(rooms[roomId]);
       const setOtherUsers = setUsers;
       setOtherUsers.delete(socket.id);
       if (setOtherUsers.size > 0) {
@@ -69,7 +73,9 @@ export const attachZoomSignalServer = function (httpServer: http.Server) {
           socket.to(otherUser).emit('user joined', socket.id);
         }
       }
-      db.insertOrUpdateRoom(roomID, rooms[roomID].size, '');
+      const usernames = usernamesInRoom(roomId);
+      console.log(usernames);
+      db.insertOrUpdateRoom(roomId, rooms[roomId].size, '');
     });
 
     // forwards sdp information from sender to receiver

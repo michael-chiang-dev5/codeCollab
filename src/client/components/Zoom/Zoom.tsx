@@ -20,6 +20,15 @@ const Zoom = ({ roomId }: { [key: string]: string }) => {
   const senders = useRef([]); // this stores track, used to switch between webcam and screenshare  TODO: remove this
 
   useEffect(() => {
+    // only join if email is set. This is because it takes a little time for frontend to get auth
+    // information, and we want to wait for that to occur before sending name. Without this early break,
+    // you will get two sockets for each page refresh (one time for null, another time for when email is set)
+    // TODO: There is an unhandled edge case where the email is changed, which will cause the useEffect to run again
+    //       and initiate another connection without disconnecting the first. To fixt this, we need to disconnect
+    //       previous connection. But I can't imagine a realistic scenario where this edge case occurs and the fix
+    //       is a little tricky so we leave it off for now.
+    if (email === null) return;
+
     navigator.mediaDevices // this requires either localhost, or https
       .getUserMedia({ audio: false, video: true }) // TODO: audio turned off due to feedback for the time being
       .then((stream) => {
