@@ -94,6 +94,40 @@ const createUser = async (userData: UserType): Promise<UserType> => {
   }
 };
 
+interface RoomType {
+  _id: number;
+  roomId: string;
+  countUsers: number;
+  title: string;
+}
+const insertOrUpdateRoom = async (
+  roomId: string,
+  countUsers: number,
+  title: string
+): Promise<RoomType> => {
+  try {
+    const sql = `INSERT INTO Rooms (roomId, countUsers, title)
+    VALUES ($1, $2, $3)
+    ON CONFLICT (roomId)
+    DO UPDATE SET countUsers = EXCLUDED.countUsers, title = EXCLUDED.title
+    RETURNING *`;
+    const rows = await pgQuery(sql, [roomId, countUsers, title]);
+    const row = rows[0] as RoomType;
+    return row;
+  } catch (err) {
+    console.log('insertOrUpdateRoom', err);
+  }
+};
+
+const deleteAllRooms = async (): Promise<void> => {
+  try {
+    const sql = `DELETE FROM Rooms;`;
+    await pgQuery(sql, []);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 // db is an interface to interact with database
 // We do it like this so it is easy to swap databases
 //   pool can be used to forcibly disconnect

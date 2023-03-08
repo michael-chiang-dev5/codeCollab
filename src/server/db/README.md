@@ -28,3 +28,22 @@ title TEXT NULL,
 difficulty REAL NULL
 );
 ```
+
+This is for zoom rooms
+
+```
+CREATE TABLE Rooms
+(
+_id SERIAL PRIMARY KEY,
+roomId TEXT UNIQUE,
+countUsers INTEGER NOT NULL,
+title TEXT NULL
+);
+```
+
+```
+INSERT INTO Rooms (roomId, countUsers, title)
+VALUES ('aaa', 2, 'mytitle')
+ON CONFLICT (roomId)
+DO UPDATE SET countUsers = EXCLUDED.countUsers, title = EXCLUDED.title
+```
