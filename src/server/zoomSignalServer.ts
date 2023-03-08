@@ -1,5 +1,6 @@
 import { Server } from 'socket.io';
 import http from 'http';
+import { db } from './db/dbPostgreSQL';
 
 /*
  rooms is a mapping between users (parameterized by socket ids) and room urls
@@ -13,6 +14,9 @@ const rooms: { [key: string]: Set<string> } = {};
 const mapSocketToEmail: { [key: string]: string } = {};
 
 export const attachZoomSignalServer = function (httpServer: http.Server) {
+  // since we are starting up the server, clear all rooms from database
+  db.deleteAllRooms();
+
   // Syntax for socket.io changed in v4
   // https://stackoverflow.com/questions/71866234/not-a-constructor-error-if-i-upgrade-socket-io
   const io = new Server(httpServer, {
@@ -26,13 +30,14 @@ export const attachZoomSignalServer = function (httpServer: http.Server) {
 
     socket.on('disconnect', (reason) => {
       console.log(socket.id, 'leaving');
-      for (let key in rooms) {
-        if (rooms[key].has(socket.id)) {
-          rooms[key].delete(socket.id);
+      for (let roomId in rooms) {
+        if (rooms[roomId].has(socket.id)) {
+          rooms[roomId].delete(socket.id);
           // notify everybody else has disconnected
-          for (let otherUser of Array.from(rooms[key])) {
+          for (let otherUser of Array.from(rooms[roomId])) {
             socket.to(otherUser).emit('user left', socket.id);
           }
+          db.insertOrUpdateRoom(roomId, rooms[roomId].size, '');
         }
       }
     });
@@ -62,8 +67,7 @@ export const attachZoomSignalServer = function (httpServer: http.Server) {
           socket.to(otherUser).emit('user joined', socket.id);
         }
       }
-
-      console.log('rooms', rooms);
+      db.insertOrUpdateRoom(roomID, rooms[roomID].size, '');
     });
 
     // forwards sdp information from sender to receiver

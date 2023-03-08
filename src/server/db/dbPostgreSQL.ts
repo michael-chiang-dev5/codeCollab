@@ -137,4 +137,6 @@ export const db = {
   createUser,
   getMarkdowns,
   getMarkdownsWithMetadata,
+  insertOrUpdateRoom,
+  deleteAllRooms,
 };
