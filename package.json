@@ -7,9 +7,9 @@
     "start": "npx kill-port 8080; NODE_ENV=production nodemon ./src/server/server.ts & npx nodemon node_modules/y-webrtc/bin/server.js ",
     "dev": "npx kill-port 8080; NODE_ENV=development nodemon ./src/server/server.ts & NODE_ENV=development webpack serve & npx nodemon node_modules/y-webrtc/bin/server.js",
     "build": "webpack --mode production",
-    "test": "jest --verbose ----detectOpenHandles",
+    "test": "jest --verbose --forceExit",
     "test:e2e-prod": "URL=https://code-collab.org/ npx playwright test --project='chromium'; npx playwright show-report",
-    "test:e2e-dev": "URL=http://localhost:8080/ npx playwright test --project='chromium'; npx playwright show-report"
+    "test:e2e-dev": "URL=http://localhost:3000/ npx playwright test --project='chromium'; npx playwright show-report"
   },
   "keywords": [],
   "author": "Michael Chiang",
@@ -35,6 +35,7 @@
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
     "css-minimizer-webpack-plugin": "^4.2.2",
+    "express-async-errors": "^3.1.1",
     "express-session": "^1.17.3",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^29.4.3",
@@ -71,6 +72,7 @@
     "rehype-raw": "^6.1.1",
     "remark-gfm": "^3.0.1",
     "socket.io-client": "^4.6.1",
+    "unique-names-generator": "^4.7.1",
     "uuid": "^9.0.0",
     "y-codemirror.next": "^0.3.2",
     "y-webrtc": "^10.2.4",

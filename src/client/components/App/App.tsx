@@ -14,42 +14,54 @@ import Markdown from '../Markdown/Markdown';
 import MarkdownContainer from '../Markdown/Container';
 import Room from '../Room/Room';
 import Wrapper from '../Room/Wrapper';
-import Library from '../Library/Library';
-
+import LobbyNewRoom from '../LobbyNewRoom/LobbyNewRoom';
+import { UserType } from '../../../types/types';
+import LobbyJoinRoom from '../LobbyJoinRoom/LobbyJoinRoom';
 // These are the left items on the navbar
 const leftItems = {
   Home: '/',
-  Library: '/library',
+  'New room': '/lobbyNewRoom',
+  'Join room': '/lobbyJoinRoom',
 };
+import {
+  uniqueNamesGenerator,
+  adjectives,
+  colors,
+  animals,
+} from 'unique-names-generator';
 
 function App() {
-  const email = useSelector((state: RootState) => state.user.email);
+  const sub = useSelector((state: RootState) => state.user.sub);
   const dispatch = useDispatch();
-
   // On mount, get user data
   useEffect(() => {
     // we cannot use async/await in useEffect without wrapping in outer function
     const response = axios({
       method: 'get',
       withCredentials: true,
-      url: 'auth/user',
+      url: `${process.env.WEBSITE_URL}auth/user`,
     })
       .then((res) => {
         if (res.data) {
-          const data = res.data;
-          // Output of console.log(data);
-          //    { "_id": 1,
-          //      "sub": "117477940901052965444",
-          //      "picture": "https://lh3.googleusercontent.com/a/default-user=s96-c",
-          //      "email": "michael.chiang.mc5@gmail.com",
-          //      "email_verified": true}
+          const data: UserType = res.data;
           dispatch(actionSetField({ field: 'sub', value: data.sub }));
           dispatch(actionSetField({ field: 'picture', value: data.picture }));
-          dispatch(actionSetField({ field: 'email', value: data.email }));
           dispatch(actionSetField({ field: '_id', value: data._id }));
+
+          // if anonymous user, give them a random email
+          if (data.email === '') {
+            const anonName = uniqueNamesGenerator({
+              dictionaries: [adjectives, animals],
+              separator: '-',
+              length: 2,
+            });
+            dispatch(actionSetField({ field: 'email', value: anonName }));
+          } else {
+            dispatch(actionSetField({ field: 'email', value: data.email }));
+          }
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log('error accessing auth/user'));
   }, []);
 
   return (
@@ -69,7 +81,7 @@ function App() {
 
           <div className={styles.row}>
             <div className={styles.margin}>
-              {email ? (
+              {sub !== '' ? (
                 <a href="/auth/logout">logout</a>
               ) : (
                 <a href={`/auth/google`}>log in</a>
@@ -85,15 +97,17 @@ function App() {
             />
             <Route
               path="/ComponentZoom"
-              element={<Zoom roomId={'asdf'} cardId={'asdf'} />}
+              element={<Zoom roomid={'asdf'} cardId={'asdf'} />}
             />
             <Route
               path="/ComponentCollabRepl"
-              element={<CollabRepl roomId="1" cardId="2" />}
+              element={<CollabRepl roomid="1" cardId="2" />}
             />
-            <Route path="/" element={<Room markdownId="1" roomId="0" />} />
-            <Route path="/library" element={<Library />} />
-            <Route path="/room/:markdownId/:roomId" element={<Wrapper />} />
+            <Route path="/" element={<Room markdownId="1" roomid="0" />} />
+            <Route path="/lobbyNewRoom" element={<LobbyNewRoom />} />
+            <Route path="/lobbyJoinRoom" element={<LobbyJoinRoom />} />
+
+            <Route path="/room/:markdownId/:roomid" element={<Wrapper />} />
           </Routes>
         </div>
       </BrowserRouter>

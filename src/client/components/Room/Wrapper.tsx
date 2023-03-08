@@ -5,11 +5,11 @@ import { useParams } from 'react-router';
 import Room from './Room';
 
 const Wrapper = () => {
-  const { markdownId, roomId } = useParams();
+  const { markdownId, roomid } = useParams();
   console.log('in wrapper');
   return (
     <>
-      <Room markdownId={markdownId} roomId={roomId} />;
+      <Room markdownId={markdownId} roomid={roomid} />;
     </>
   );
 };

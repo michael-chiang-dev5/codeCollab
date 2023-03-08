@@ -28,3 +28,16 @@ title TEXT NULL,
 difficulty REAL NULL
 );
 ```
+
+This is for zoom rooms
+
+```
+CREATE TABLE Rooms
+(
+_id SERIAL PRIMARY KEY,
+roomid TEXT UNIQUE,
+countusers INTEGER NOT NULL,
+title TEXT NULL,
+users TEXT NOT NULL
+);
+```

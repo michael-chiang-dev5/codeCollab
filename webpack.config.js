@@ -49,6 +49,7 @@ module.exports = {
       'process.env.ZOOM_SIGNAL_SERVER_URL': JSON.stringify(
         process.env.ZOOM_SIGNAL_SERVER_URL
       ),
+      'process.env.WEBSITE_URL': JSON.stringify(process.env.WEBSITE_URL),
     }),
 
     new HtmlWebpackPlugin({
@@ -74,6 +75,9 @@ module.exports = {
     },
     // historyApiFallback for refresh on react router route
     // https://ui.dev/react-router-cannot-get-url-refresh
+    // devServer only serves on :3000/. When you access a route localhost:3000/my/route, dev server
+    //   normally does not know how to resolve. historyApiFallback makes it so that dev server serves
+    //   bundle, then redirects to /my/route
     historyApiFallback: true,
   },
   optimization: {
