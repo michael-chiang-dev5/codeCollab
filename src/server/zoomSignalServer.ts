@@ -20,8 +20,8 @@ const rooms: { [key: string]: Set<string> } = {};
 */
 const mapSocketToEmail: { [key: string]: string } = {};
 
-const usernamesInRoom = function (roomId: string) {
-  const room = rooms[roomId];
+const usernamesInRoom = function (roomid: string) {
+  const room = rooms[roomid];
   const socketIds = Array.from(room);
   return socketIds.map((socket) => mapSocketToEmail[socket]);
 };
@@ -43,17 +43,17 @@ export const attachZoomSignalServer = function (httpServer: http.Server) {
 
     socket.on('disconnect', (reason) => {
       console.log(socket.id, 'leaving');
-      for (let roomId in rooms) {
-        if (rooms[roomId].has(socket.id)) {
-          rooms[roomId].delete(socket.id);
+      for (let roomid in rooms) {
+        if (rooms[roomid].has(socket.id)) {
+          rooms[roomid].delete(socket.id);
           // notify everybody else has disconnected
-          for (let otherUser of Array.from(rooms[roomId])) {
+          for (let otherUser of Array.from(rooms[roomid])) {
             socket.to(otherUser).emit('user left', socket.id);
           }
-          const usernames = usernamesInRoom(roomId);
+          const usernames = usernamesInRoom(roomid);
           db.insertOrUpdateRoom(
-            roomId,
-            rooms[roomId].size,
+            roomid,
+            rooms[roomid].size,
             '',
             JSON.stringify(usernames)
           );
@@ -62,13 +62,13 @@ export const attachZoomSignalServer = function (httpServer: http.Server) {
     });
 
     socket.on('join room', (payload) => {
-      const roomId = payload.roomId;
+      const roomid = payload.roomid;
       mapSocketToEmail[socket.id] = payload.email;
-      if (rooms[roomId]) rooms[roomId].add(socket.id);
-      else rooms[roomId] = new Set([socket.id]);
+      if (rooms[roomid]) rooms[roomid].add(socket.id);
+      else rooms[roomid] = new Set([socket.id]);
 
       // need to deep copy
-      const setUsers = new Set(rooms[roomId]);
+      const setUsers = new Set(rooms[roomid]);
       const setOtherUsers = setUsers;
       setOtherUsers.delete(socket.id);
       if (setOtherUsers.size > 0) {
@@ -79,10 +79,10 @@ export const attachZoomSignalServer = function (httpServer: http.Server) {
           socket.to(otherUser).emit('user joined', socket.id);
         }
       }
-      const usernames = usernamesInRoom(roomId);
+      const usernames = usernamesInRoom(roomid);
       db.insertOrUpdateRoom(
-        roomId,
-        rooms[roomId].size,
+        roomid,
+        rooms[roomid].size,
         '',
         JSON.stringify(usernames)
       );

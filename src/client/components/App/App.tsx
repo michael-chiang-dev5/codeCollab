@@ -97,17 +97,17 @@ function App() {
             />
             <Route
               path="/ComponentZoom"
-              element={<Zoom roomId={'asdf'} cardId={'asdf'} />}
+              element={<Zoom roomid={'asdf'} cardId={'asdf'} />}
             />
             <Route
               path="/ComponentCollabRepl"
-              element={<CollabRepl roomId="1" cardId="2" />}
+              element={<CollabRepl roomid="1" cardId="2" />}
             />
-            <Route path="/" element={<Room markdownId="1" roomId="0" />} />
+            <Route path="/" element={<Room markdownId="1" roomid="0" />} />
             <Route path="/lobbyNewRoom" element={<LobbyNewRoom />} />
             <Route path="/lobbyJoinRoom" element={<LobbyJoinRoom />} />
 
-            <Route path="/room/:markdownId/:roomId" element={<Wrapper />} />
+            <Route path="/room/:markdownId/:roomid" element={<Wrapper />} />
           </Routes>
         </div>
       </BrowserRouter>

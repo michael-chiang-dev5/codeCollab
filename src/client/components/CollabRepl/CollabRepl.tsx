@@ -7,7 +7,7 @@ import { runCode } from '../../repl/eval';
 import { RootState } from '../../redux/store';
 import styles from './CollabRepl.module.css';
 import './global.css';
-const CollabRepl = ({ roomId }: { [key: string]: string }) => {
+const CollabRepl = ({ roomid }: { [key: string]: string }) => {
   // getters for Redux state
   // useSelector is a hook that re-renders component everything time selected value changes
   const replData = useSelector((state: RootState) => state.repl);
@@ -29,7 +29,7 @@ const CollabRepl = ({ roomId }: { [key: string]: string }) => {
       {/* collaborative code editor */}
       <CollabCodeEditor
         minHeight={'100%'}
-        editorID={roomId}
+        editorID={roomid}
         initialText={''}
         theme="light"
         cb={(e) => cb('text', e)}

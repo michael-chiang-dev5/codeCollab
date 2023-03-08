@@ -29,7 +29,7 @@ export type MarkdownsWithMetaDataType = MarkdownWithMetaDataType[];
 
 export interface RoomType {
   _id: number;
-  roomId: string;
+  roomid: string;
   countusers: number;
   title: string;
   users: string;

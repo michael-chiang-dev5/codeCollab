@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { RoomType } from '../../../types/types';
 import { v4 as uuid } from 'uuid';
+import styles from './LobbyJoinRoom.module.css';
 
 const LobbyJoinRoom = () => {
   const [rooms, setRooms] = useState<RoomType[]>([]);
@@ -22,11 +23,11 @@ const LobbyJoinRoom = () => {
       {rooms.map((room) => {
         const users: string = JSON.parse(room.users).join(', ');
         // 4 is the markdownId for the markdown that explains room entry
-        const url = process.env.WEBSITE_URL + '4/' + room.roomId;
+        const url = process.env.WEBSITE_URL + 'room/4/' + room.roomid;
         return (
-          <div className="room" key={uuid()}>
+          <div className={styles.row} key={uuid()}>
+            <a href={url}>Join </a>
             <div className="userList">{users}</div>
-            <a href={url}>Join</a>
           </div>
         );
       })}

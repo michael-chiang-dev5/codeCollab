@@ -35,7 +35,7 @@ This is for zoom rooms
 CREATE TABLE Rooms
 (
 _id SERIAL PRIMARY KEY,
-roomId TEXT UNIQUE,
+roomid TEXT UNIQUE,
 countusers INTEGER NOT NULL,
 title TEXT NULL,
 users TEXT NOT NULL
