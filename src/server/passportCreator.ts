@@ -25,14 +25,11 @@ export const passportCreator = function () {
     done: Function // there should be a type for this, but passport doesn't seem to have a type for done
   ) => {
     const userData: UserType = { _id: null, ...profile._json };
-
     const users = await db.getUsersBySub(userData.sub);
-    console.log('**', users);
-
     if (users.length === 0) {
       // user not found so add user to db
-      const _id = await db.createUser(profile._json);
-      return done(null, { ...profile._json, _id });
+      const user = await db.createUser(profile._json);
+      return done(null, user);
     } else {
       // user found
       // the first  argument of done is err. You must set err to null or else

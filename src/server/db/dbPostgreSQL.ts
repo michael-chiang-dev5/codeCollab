@@ -74,21 +74,21 @@ const getUsersBySub = async (sub: string): Promise<UserType[]> => {
   }
 };
 
-const createUser = async (args: { [key: string]: string }) => {
+const createUser = async (userData: UserType): Promise<UserType> => {
   try {
-    const arr = [
-      args['sub'],
-      args['picture'],
-      args['email'],
-      args['email_verified'],
+    const params = [
+      userData.sub,
+      userData.picture,
+      userData.email,
+      userData.email_verified,
     ];
     const sql = `INSERT INTO GoogleUserInfo
     (sub, picture, email, email_verified)
     VALUES ($1, $2, $3, $4)
     RETURNING *;`;
-    const data = await pgQuery(sql, arr);
-    console.log(data.rows);
-    return data.rows[0]._id;
+    const data = await pgQuery(sql, params);
+    const row: UserType = data.rows[0];
+    return row;
   } catch (err) {
     console.log('createUser', err);
   }
