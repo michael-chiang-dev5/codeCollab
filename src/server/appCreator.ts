@@ -103,7 +103,7 @@ export const appCreator = function () {
         location: 'unknown location',
       };
       const err = Object.assign(errTemplate, errObj);
-      console.log('Server error: ', err);
+      console.log('Global error handler caught an error! ', err);
       return res.status(err.status).json(err);
     }
   );
