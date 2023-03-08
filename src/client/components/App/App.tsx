@@ -23,6 +23,12 @@ const leftItems = {
   'New room': '/lobbyNewRoom',
   'Join room': '/lobbyJoinRoom',
 };
+import {
+  uniqueNamesGenerator,
+  adjectives,
+  colors,
+  animals,
+} from 'unique-names-generator';
 
 function App() {
   const email = useSelector((state: RootState) => state.user.email);
@@ -43,6 +49,16 @@ function App() {
           dispatch(actionSetField({ field: 'picture', value: data.picture }));
           dispatch(actionSetField({ field: 'email', value: data.email }));
           dispatch(actionSetField({ field: '_id', value: data._id }));
+
+          // if anonymous user, give them a random email
+          if (data.email === '') {
+            const anonName = uniqueNamesGenerator({
+              dictionaries: [adjectives, animals, colors], // colors can be omitted here as not used
+              separator: '-',
+              length: 2,
+            });
+            dispatch(actionSetField({ field: 'email', value: anonName }));
+          }
         }
       })
       .catch((err) => console.log('error accessing auth/user'));
