@@ -14,11 +14,11 @@ import { router as authRouter } from './authRouter';
 import { router as apiRouter } from './apiRouter';
 import cors from 'cors';
 import { ErrorType } from '../types/types';
+import { nextID } from 'yjs/dist/src/internals';
 
 export const appCreator = function () {
   const app = express();
 
-  // TODO: read up on this
   app.use(
     cors({
       credentials: true,
@@ -52,8 +52,8 @@ export const appCreator = function () {
    */
   // serves static files bundle.css, bundle.js
   app.use(express.static('dist'));
-  // serves index.html
-  app.get('/', (req: Request, res: Response) => {
+  // serves index.html on root
+  app.get('/', (req, res, next) => {
     try {
       return res
         .status(200)
@@ -64,7 +64,7 @@ export const appCreator = function () {
         status: 500,
         location: '/',
       };
-      throw errObj;
+      return next(errObj);
     }
   });
 
@@ -79,7 +79,7 @@ export const appCreator = function () {
   // See: https://ui.dev/react-router-cannot-get-url-refresh for alternative strategies
   // Unfortunately, we can't get rid of this. Removing makes the `refresh on react route` feature fail
   //   If we wanted to, we need to configure nginx to rename uris with appended index.html
-  app.get('/*', function (req, res) {
+  app.get('/*', function (req, res, next) {
     try {
       return res
         .status(200)
@@ -90,19 +90,23 @@ export const appCreator = function () {
         status: 500,
         location: '/*',
       };
-      throw errObj;
+      return next(errObj);
     }
   });
 
   // global error handler
-  app.use((err: ErrorType, req: Request, res: Response, next: NextFunction) => {
-    const errTemplate = {
-      message: 'unknown error occured',
-      status: 500,
-      location: 'unknown location',
-    };
-    return res.status(errTemplate.status).json(Object.assign(errTemplate, err));
-  });
+  app.use(
+    (errObj: ErrorType, req: Request, res: Response, next: NextFunction) => {
+      const errTemplate = {
+        message: 'unknown error occured',
+        status: 500,
+        location: 'unknown location',
+      };
+      return res
+        .status(errTemplate.status)
+        .json(Object.assign(errTemplate, errObj));
+    }
+  );
 
   return app;
 };

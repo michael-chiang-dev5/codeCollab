@@ -7,15 +7,14 @@ import { ErrorType } from '../types/types';
 router.get('/markdown/library', async (req, res, next) => {
   try {
     const rows = await db.getMarkdownsWithMetadata();
-    res.status(200).send(rows);
+    return res.status(200).send(rows);
   } catch (err) {
-    console.log('sddsfsd');
     const errObj: ErrorType = {
       message: err,
       status: 500,
       location: '/api/markdown/library',
     };
-    next(errObj);
+    return next(errObj);
   }
 });
 
@@ -23,13 +22,13 @@ router.get('/markdown/:id', async (req, res, next) => {
   try {
     const _id = Number(req.params.id);
     const row = await db.getMarkdown(_id);
-    res.status(200).send(row);
+    return res.status(200).send(row);
   } catch (err) {
     const errObj: ErrorType = {
       message: err,
       status: 500,
       location: '/api/markdown/:id',
     };
-    next(errObj);
+    return next(errObj);
   }
 });
