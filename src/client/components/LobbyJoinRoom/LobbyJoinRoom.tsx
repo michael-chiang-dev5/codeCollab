@@ -20,17 +20,21 @@ const LobbyJoinRoom = () => {
 
   return (
     <>
-      {rooms.map((room) => {
-        const users: string = JSON.parse(room.users).join(', ');
-        // 4 is the markdownId for the markdown that explains room entry
-        const url = process.env.WEBSITE_URL + 'room/4/' + room.roomid;
-        return (
-          <div className={styles.row} key={uuid()}>
-            <a href={url}>Join </a>
-            <div className="userList">{users}</div>
-          </div>
-        );
-      })}
+      {rooms.length === 0 ? (
+        <h1>Nobody here! You should create a new room instead</h1>
+      ) : (
+        rooms.map((room) => {
+          const users: string = JSON.parse(room.users).join(', ');
+          // 4 is the markdownId for the markdown that explains room entry
+          const url = process.env.WEBSITE_URL + 'room/4/' + room.roomid;
+          return (
+            <div className={styles.row} key={uuid()}>
+              <a href={url}>Join </a>
+              <div className="userList">{users}</div>
+            </div>
+          );
+        })
+      )}
     </>
   );
 };
