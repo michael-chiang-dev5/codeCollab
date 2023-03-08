@@ -40,11 +40,8 @@ export const attachZoomSignalServer = function (httpServer: http.Server) {
     socket.on('join room', (payload) => {
       const roomID = payload.roomId;
       mapSocketToEmail[socket.id] = payload.email;
-      if (rooms[roomID]) {
-        rooms[roomID].add(socket.id);
-      } else {
-        rooms[roomID] = new Set([socket.id]);
-      }
+      if (rooms[roomID]) rooms[roomID].add(socket.id);
+      else rooms[roomID] = new Set([socket.id]);
 
       console.log(
         `user ${socket.id} joined room`,
