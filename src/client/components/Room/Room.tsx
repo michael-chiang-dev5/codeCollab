@@ -25,7 +25,7 @@ const Room = ({ markdownId, roomId }: RoomProps) => {
           <CollabRepl />
         </div>
       </div>
-      <Zoom />
+      <Zoom roomId={roomId} />
     </>
   );
 };

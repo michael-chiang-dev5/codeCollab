@@ -27,7 +27,7 @@ const LobbyNewRoom = () => {
       <div className={`${styles.column}`}>
         <h3>List of code challenges</h3>
         {markdowns.map((e) => (
-          <div>
+          <div key={uuid()}>
             <a href={`/room/${e._id}/${uuid()}`}>{e.title}</a>
           </div>
         ))}

@@ -1,6 +1,14 @@
 import { Server } from 'socket.io';
 import http from 'http';
 
+/*
+ rooms is a mapping between users (parameterized by socket ids) and room urls
+   For example: rooms = { 
+                           'flashy-aardvark' : Set(['a31d', 'b32s']),
+                           'stupendous-wolf' : Set(['4x4n'])
+                        }
+   tells us there are two users in room "flash-aardvark"
+*/
 const rooms: { [key: string]: Set<string> } = {};
 const mapSocketToEmail: { [key: string]: string } = {};
 
@@ -57,6 +65,8 @@ export const attachZoomSignalServer = function (httpServer: http.Server) {
           socket.to(otherUser).emit('user joined', socket.id);
         }
       }
+
+      console.log('rooms', rooms);
     });
 
     // forwards sdp information from sender to receiver

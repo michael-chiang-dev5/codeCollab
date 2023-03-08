@@ -6,7 +6,7 @@ import styles from './Zoom.module.css';
 import { RootState } from '../../redux/store';
 import { v4 as uuid } from 'uuid';
 
-const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
+const Zoom = ({ roomId }: { [key: string]: string }) => {
   const userData = useSelector((state: RootState) => state.user);
 
   // useRef is used to access the DOM
@@ -27,8 +27,9 @@ const Zoom = ({ roomId, cardId }: { [key: string]: string }) => {
 
         socketRef.current = io.connect(process.env.ZOOM_SIGNAL_SERVER_URL);
         console.log('emitting "join room" to server');
+        console.log(roomId);
         const payload = {
-          roomId: `/${roomId}/${cardId}`,
+          roomId: roomId,
           email: userData.email,
         };
         socketRef.current.emit('join room', payload);

@@ -15,7 +15,7 @@ import MarkdownContainer from '../Markdown/Container';
 import Room from '../Room/Room';
 import Wrapper from '../Room/Wrapper';
 import LobbyNewRoom from '../LobbyNewRoom/LobbyNewRoom';
-
+import { UserType } from '../../../types/types';
 // These are the left items on the navbar
 const leftItems = {
   Home: '/',
@@ -36,20 +36,14 @@ function App() {
     })
       .then((res) => {
         if (res.data) {
-          const data = res.data;
-          // Output of console.log(data);
-          //    { "_id": 1,
-          //      "sub": "117477940901052965444",
-          //      "picture": "https://lh3.googleusercontent.com/a/default-user=s96-c",
-          //      "email": "michael.chiang.mc5@gmail.com",
-          //      "email_verified": true}
+          const data: UserType = res.data;
           dispatch(actionSetField({ field: 'sub', value: data.sub }));
           dispatch(actionSetField({ field: 'picture', value: data.picture }));
           dispatch(actionSetField({ field: 'email', value: data.email }));
           dispatch(actionSetField({ field: '_id', value: data._id }));
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log('error accessing auth/user'));
   }, []);
 
   return (
