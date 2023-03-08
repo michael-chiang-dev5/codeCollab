@@ -22,7 +22,7 @@ const Room = ({ markdownId, roomId }: RoomProps) => {
           <Container markdownId={markdownId} />
         </div>
         <div className={styles.middle}>
-          <CollabRepl />
+          <CollabRepl roomId={roomId} />
         </div>
       </div>
       <Zoom roomId={roomId} />
