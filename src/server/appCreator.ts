@@ -102,9 +102,9 @@ export const appCreator = function () {
         status: 500,
         location: 'unknown location',
       };
-      return res
-        .status(errTemplate.status)
-        .json(Object.assign(errTemplate, errObj));
+      const err = Object.assign(errTemplate, errObj);
+      console.log('Server error: ', err);
+      return res.status(err.status).json(err);
     }
   );
 

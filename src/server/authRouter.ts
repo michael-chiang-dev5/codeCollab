@@ -2,19 +2,31 @@ import express from 'express';
 import { passportCreator } from './passportCreator';
 export const router = express.Router();
 const passport = passportCreator();
+import { UserType, ErrorType } from '../types/types';
 
-router.get('/user', (req, res) => {
-  // req.user is the parsed jwt containing user information
-  // Example:
-  //   req.user = {
-  //     _id: 4,
-  //     sub: '114622580175644930120',
-  //     picture: 'https://lh3.googleusercontent.com/a/default-user=s96-c',
-  //     email: 'michael.chiang.dev5@gmail.com',
-  //     email_verified: true,
-  //   };
-  // }
-  res.status(200).json(req.user ? req.user : null);
+router.get('/user', (req, res, next) => {
+  try {
+    // req.user is the parsed jwt containing user information
+    // It will either be an object of shape UserType (valid jwt) or undefined
+    let userData: UserType;
+    if (req.user === undefined)
+      userData = {
+        _id: null,
+        sub: '',
+        picture: '',
+        email: '',
+        email_verified: false,
+      };
+    else userData = req.user as UserType;
+    return res.status(200).json(userData);
+  } catch (err) {
+    const errObj: ErrorType = {
+      message: err,
+      status: 500,
+      location: '/auth/user',
+    };
+    return next(errObj);
+  }
 });
 
 // When client accesses endpoint /google, backend will do request to google
