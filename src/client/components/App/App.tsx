@@ -16,10 +16,12 @@ import Room from '../Room/Room';
 import Wrapper from '../Room/Wrapper';
 import LobbyNewRoom from '../LobbyNewRoom/LobbyNewRoom';
 import { UserType } from '../../../types/types';
+import LobbyJoinRoom from '../LobbyJoinRoom/LobbyJoinRoom';
 // These are the left items on the navbar
 const leftItems = {
   Home: '/',
   'New room': '/lobbyNewRoom',
+  'Join room': '/lobbyJoinRoom',
 };
 
 function App() {
@@ -87,6 +89,8 @@ function App() {
             />
             <Route path="/" element={<Room markdownId="1" roomId="0" />} />
             <Route path="/lobbyNewRoom" element={<LobbyNewRoom />} />
+            <Route path="/lobbyJoinRoom" element={<LobbyJoinRoom />} />
+
             <Route path="/room/:markdownId/:roomId" element={<Wrapper />} />
           </Routes>
         </div>

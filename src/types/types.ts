@@ -26,3 +26,10 @@ export interface MarkdownType {
 }
 
 export type MarkdownsWithMetaDataType = MarkdownWithMetaDataType[];
+
+export interface RoomType {
+  _id: number;
+  roomId: string;
+  countusers: number;
+  title: string;
+}

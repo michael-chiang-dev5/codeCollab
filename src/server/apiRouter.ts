@@ -33,3 +33,17 @@ router.get('/markdown/:id', async (req, res, next) => {
     return next(errObj);
   }
 });
+
+router.get('/room/', async (req, res, next) => {
+  try {
+    const rows = await db.getNonemptyRooms();
+    return res.status(200).json(rows);
+  } catch (err) {
+    const errObj: ErrorType = {
+      message: err,
+      status: 500,
+      location: '/api/room/',
+    };
+    return next(errObj);
+  }
+});

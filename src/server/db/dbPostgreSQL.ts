@@ -2,8 +2,7 @@ import { Pool } from 'pg';
 import dotenv from 'dotenv';
 dotenv.config();
 import { MarkdownsWithMetaDataType } from '../../types/types';
-import { MarkdownType } from '../../types/types';
-
+import { MarkdownType, RoomType } from '../../types/types';
 const pool = new Pool({
   connectionString: process.env.PG_URI,
 });
@@ -94,24 +93,18 @@ const createUser = async (userData: UserType): Promise<UserType> => {
   }
 };
 
-interface RoomType {
-  _id: number;
-  roomId: string;
-  countUsers: number;
-  title: string;
-}
 const insertOrUpdateRoom = async (
   roomId: string,
-  countUsers: number,
+  countusers: number,
   title: string
 ): Promise<RoomType> => {
   try {
-    const sql = `INSERT INTO Rooms (roomId, countUsers, title)
+    const sql = `INSERT INTO Rooms (roomId, countusers, title)
     VALUES ($1, $2, $3)
     ON CONFLICT (roomId)
-    DO UPDATE SET countUsers = EXCLUDED.countUsers, title = EXCLUDED.title
+    DO UPDATE SET countusers = EXCLUDED.countusers, title = EXCLUDED.title
     RETURNING *`;
-    const rows = await pgQuery(sql, [roomId, countUsers, title]);
+    const rows = await pgQuery(sql, [roomId, countusers, title]);
     const row = rows[0] as RoomType;
     return row;
   } catch (err) {
@@ -128,6 +121,16 @@ const deleteAllRooms = async (): Promise<void> => {
   }
 };
 
+const getNonemptyRooms = async () => {
+  try {
+    const sql = `SELECT * FROM Rooms WHERE countusers > 0;`;
+    const rows = (await pgQuery(sql, [])) as RoomType[];
+    return rows;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 // db is an interface to interact with database
 // We do it like this so it is easy to swap databases
 //   pool can be used to forcibly disconnect
@@ -139,4 +142,5 @@ export const db = {
   getMarkdownsWithMetadata,
   insertOrUpdateRoom,
   deleteAllRooms,
+  getNonemptyRooms,
 };
