@@ -29,6 +29,8 @@ router.get('/user', (req, res, next) => {
   }
 });
 
+// TODO: consider renaming route to "login"
+// Client access this route when the user clicks the "log in" button
 // When client accesses endpoint /google, backend will do request to google
 // authentication server. You need to enable google oauth authentication and
 // set up client ID /secret. In addition, you must set callback url to
@@ -36,27 +38,46 @@ router.get('/user', (req, res, next) => {
 router.get('/google', passport.authenticate('google', { scope: ['email'] }));
 
 // Callback url. While setting up oauth authentication, you must set callback
-// url to /google/callback
+// url to /google/callback in developer console. When google server access callback url,
+// passport.authenticate middleware updates passport. If an error occurs in passport.authenticate
+// middleware, /auth/google/failure route is accessed. Otherwise, we redirect to '/' with google
+// jwt set
 router.get(
   '/google/callback',
   passport.authenticate('google', {
-    failureRedirect: '/auth/failure',
+    failureRedirect: '/auth/google/failure',
   }),
   (req, res) => {
     return res.redirect('/');
   }
 );
 
-router.get('/failure', (request, response) => {
-  response.status(500).send('authentication failed...');
+// If there is a problem with the google/callback route (ie, issue in the passport.authenticate middleware)
+// then redirected to failure route
+router.get('/google/failure', (req, res, next) => {
+  const errObj: ErrorType = {
+    message:
+      'google oauthentication failed (most likely issue with passport.authenticate)',
+    status: 500,
+    location: 'auth/google/failure',
+  };
+  return next(errObj);
 });
-// TODO: add comments about login, logout being set by passport
+
 // https://www.passportjs.org/concepts/authentication/login/
-router.get('/logout', (request, response) => {
-  request.logout(() => {
-    // https://stackoverflow.com/questions/72336177/error-reqlogout-requires-a-callback-function
-    console.log('logging out');
-    request.session.destroy(() => {}); // destroy cookie?
-    response.redirect('/');
-  });
+router.get('/logout', (req, res, next) => {
+  try {
+    req.logout(() => {
+      // https://stackoverflow.com/questions/72336177/error-reqlogout-requires-a-callback-function
+      req.session.destroy(() => {}); // remove jwt
+      res.redirect('/');
+    });
+  } catch (err) {
+    const errObj: ErrorType = {
+      message: err,
+      status: 500,
+      location: '/auth/logout',
+    };
+    return next(errObj);
+  }
 });

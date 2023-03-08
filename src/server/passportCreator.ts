@@ -22,9 +22,6 @@ export const passportCreator = function () {
     // next is for express, done is for passport. They do differ slightly. A good writeup on the differences between next() and done(): https://stackoverflow.com/questions/26164837/difference-between-done-and-next-in-node-js-callbacks
     done: Function // there should be a type for this, but passport doesn't seem to have a type for done
   ) => {
-    console.log('request', typeof request, request);
-
-    console.log('getting user');
     const userInfo = await db.getUser(profile.sub);
     // check if user is found
     if (userInfo) {
