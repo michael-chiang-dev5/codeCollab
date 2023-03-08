@@ -6,4 +6,10 @@ interface MarkdownWithMetaDataType {
   str: string; // this is the actual prompt text that goes in the container
 }
 
+export interface ErrorType {
+  message: any;
+  status: number;
+  location: string;
+}
+
 export type MarkdownsWithMetaDataType = MarkdownWithMetaDataType[];

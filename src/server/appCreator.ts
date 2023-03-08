@@ -12,8 +12,8 @@ import { passportCreator } from './passportCreator';
 import session from 'express-session';
 import { router as authRouter } from './authRouter';
 import { router as apiRouter } from './apiRouter';
-
 import cors from 'cors';
+import { ErrorType } from '../types/types';
 
 export const appCreator = function () {
   const app = express();
@@ -54,9 +54,18 @@ export const appCreator = function () {
   app.use(express.static('dist'));
   // serves index.html
   app.get('/', (req: Request, res: Response) => {
-    return res
-      .status(200)
-      .sendFile(path.resolve(__dirname, '../../dist/index.html'));
+    try {
+      return res
+        .status(200)
+        .sendFile(path.resolve(__dirname, '../../dist/index.html'));
+    } catch (err) {
+      const errObj: ErrorType = {
+        message: err,
+        status: 500,
+        location: '/',
+      };
+      throw errObj;
+    }
   });
 
   // app.get('/api', async (req: Request, res: Response) => {
@@ -69,13 +78,30 @@ export const appCreator = function () {
   // Also note we cannot use res.redirect, or else the url itself will be redirected to '/'
   // See: https://ui.dev/react-router-cannot-get-url-refresh for alternative strategies
   // Unfortunately, we can't get rid of this. Removing makes the `refresh on react route` feature fail
+  //   If we wanted to, we need to configure nginx to rename uris with appended index.html
   app.get('/*', function (req, res) {
-    console.log(
-      'user tried to access unknown path, sending bundle and allowing react router to try to resolve path'
-    );
-    return res
-      .status(200)
-      .sendFile(path.resolve(__dirname, '../../dist/index.html'));
+    try {
+      return res
+        .status(200)
+        .sendFile(path.resolve(__dirname, '../../dist/index.html'));
+    } catch (err) {
+      const errObj: ErrorType = {
+        message: err,
+        status: 500,
+        location: '/*',
+      };
+      throw errObj;
+    }
+  });
+
+  // global error handler
+  app.use((err: ErrorType, req: Request, res: Response, next: NextFunction) => {
+    const errTemplate = {
+      message: 'unknown error occured',
+      status: 500,
+      location: 'unknown location',
+    };
+    return res.status(errTemplate.status).json(Object.assign(errTemplate, err));
   });
 
   return app;
