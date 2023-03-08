@@ -1,10 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { setProperty } from './util';
 
-interface UserStateType {
-  [key: string]: string | number | boolean | null;
+interface User {
+  sub: string;
+  picture: string;
+  email: string;
+  email_verified: boolean;
+  _id: number;
 }
 
-const initialState: UserStateType = {
+const initialState: User = {
   sub: null,
   picture: null,
   email: null,
@@ -16,10 +21,11 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    actionSetField: (state: UserStateType, action) => {
-      const { field, value } = action.payload;
+    actionSetField: (state: User, action) => {
+      const field: keyof User = action.payload.field;
+      const value = action.payload.value;
       if (Object.keys(state).includes(field) === false) return; // validate field: don't do anything if invalid field
-      state[field] = value;
+      setProperty(state, field, value);
     },
   },
 });
