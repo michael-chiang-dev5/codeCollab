@@ -10,5 +10,5 @@ docs/client
 docs/server
 nohup.out
 SECRET.md
-/server/app.log
-/server/.fuse*
+src/server/app.log
+src/server/.fuse*
