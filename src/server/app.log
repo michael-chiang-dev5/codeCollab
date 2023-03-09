@@ -303,3 +303,5 @@
 {"level":30,"time":1678341933193,"pid":3971,"hostname":"michael","msg":"server is running on port 8080"}
 {"level":30,"time":1678341946721,"pid":4113,"hostname":"michael","msg":"running sql command: "}
 {"level":30,"time":1678341946726,"pid":4113,"hostname":"michael","msg":"server is running on port 8080"}
+{"level":30,"time":1678367689468,"pid":22117,"hostname":"michael","msg":"running sql command: "}
+{"level":30,"time":1678367689474,"pid":22117,"hostname":"michael","msg":"server is running on port 8080"}
