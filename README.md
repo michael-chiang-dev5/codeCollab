@@ -1,3 +1,10 @@
+# Demo
+
+1. Go to [https://code-collab.org](https://code-collab.org).
+2. Make sure your webcam is not being used by Zoom / another browser. This is necessary if you want to demo video chat.
+3. Open a second tab with the same url: https://code-collab.org
+4. You should now be collaborating with yourself! You should see two webcam streams on the bottom, and when you type into the code editor it should appear in the other browser tab.
+
 # Description
 
 CodeCollab is a platform for practicing DSA with other people (think two-player leetcode). Check it out [here](https://code-collab.org). It has the following features:
@@ -7,9 +14,9 @@ CodeCollab is a platform for practicing DSA with other people (think two-player 
 - video chat using webRTC
 - (coming soon) v-tubing using tensorflow.js
 
-## Instructions
+# Setup
 
-You need to first set up your environment variables. Rename .env.dev --> .env and fill in your Google Oauth credentials and your database URI. If you don't have these, that is okay you will still be able to test the collaborative features (text editing and video chat).
+You need to first set up your environment variables. Rename .env.dev --> .env and fill in your Google Oauth credentials and your database URI. If you don't have these, that is okay you will still be able to test the collaborative features (text editing and video chat), you just won't have authentication and anything involving a database.
 
 Next, you can run the app via:
 
@@ -18,14 +25,7 @@ npm install
 npm start
 ```
 
-## Other ways to run the app
-
-You can run the dev environment (where Google Oauth doesn't work properly because of the callback url) with:
-
-```
-npm install
-npm run dev
-```
+## Dockerization
 
 You can also run the app with Docker.
 
@@ -41,4 +41,4 @@ You should now be able to access the app on localhost:8080. This Docker environm
 Frontend: React, Redux, webRTC
 Backend: Express, websockets
 Database: postgreSQL
-CICD: Docker, AWS Codepipeline, AWS CodeBuild, AWS EC2
+CI/CD: Docker, AWS Codepipeline, AWS ECS

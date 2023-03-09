@@ -4,7 +4,6 @@ dotenv.config();
 
 test('api/markdown/all endpoint works', async ({ page }) => {
   await page.goto(`${process.env.URL}api/markdown/all`);
-  //   const html = await page.content();
   await expect(page.getByText('Challenge 1')).toHaveCount(1);
 });
 

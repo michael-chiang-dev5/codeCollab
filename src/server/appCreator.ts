@@ -15,6 +15,7 @@ import { router as apiRouter } from './apiRouter';
 import cors from 'cors';
 import { ErrorType } from '../types/types';
 import { nextID } from 'yjs/dist/src/internals';
+import logger from './loggerPino';
 
 export const appCreator = function () {
   const app = express();
@@ -103,7 +104,7 @@ export const appCreator = function () {
         location: 'unknown location',
       };
       const err = Object.assign(errTemplate, errObj);
-      console.log('Global error handler caught an error! ', err);
+      logger.error('Global error handler caught an error! ', err);
       return res.status(err.status).json(err);
     }
   );
