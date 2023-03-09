@@ -6,6 +6,7 @@ import { MarkdownType, RoomType } from '../../types/types';
 const pool = new Pool({
   connectionString: process.env.PG_URI,
 });
+import logger from '../loggerPino';
 
 /*
 pqQuery implements functionality to run a parameterized sql query on a
@@ -24,7 +25,7 @@ const pgQuery = async (
       ? `\'${params[index - 1]}\'`
       : params[index - 1];
   });
-  // console.log('running sql command: ', sqlCommand);
+  logger.info('running sql command: ', sqlCommand);
   // Return the result of the sql query
   const data = await pool.query(text, params);
   const rows = data.rows;
@@ -49,6 +50,11 @@ const getMarkdowns = async (_id: number) => {
 };
 
 /*
+TODO: sort which functions can utilize the global error handlers
+
+*/
+
+/*
   verify is a callback in passportCreator that is called after google server access the callback url
   verify has access to user information from google and is used to sync googles auth information to local auth information
     (1) it calls getUser to see if the user already exists in our local database.
@@ -68,7 +74,7 @@ const getUsersBySub = async (sub: string): Promise<UserType[]> => {
     const rows = (await pgQuery(sql, [sub])) as UserType[];
     return rows;
   } catch (err) {
-    console.log(err);
+    logger.error(err);
   }
 };
 
@@ -89,7 +95,7 @@ const createUser = async (userData: UserType): Promise<UserType> => {
     const row = rows[0] as UserType;
     return row;
   } catch (err) {
-    console.log('createUser', err);
+    logger.error('createUser', err);
   }
 };
 
@@ -109,7 +115,7 @@ const insertOrUpdateRoom = async (
     const row = rows[0] as RoomType;
     return row;
   } catch (err) {
-    console.log('insertOrUpdateRoom', err);
+    logger.error('insertOrUpdateRoom', err);
   }
 };
 
@@ -118,7 +124,7 @@ const deleteAllRooms = async (): Promise<void> => {
     const sql = `DELETE FROM Rooms;`;
     await pgQuery(sql, []);
   } catch (err) {
-    console.log(err);
+    logger.error(err);
   }
 };
 
@@ -128,7 +134,7 @@ const getNonemptyRooms = async () => {
     const rows = (await pgQuery(sql, [])) as RoomType[];
     return rows;
   } catch (err) {
-    console.log(err);
+    logger.error(err);
   }
 };
 

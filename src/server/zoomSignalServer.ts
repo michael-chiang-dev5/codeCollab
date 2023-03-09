@@ -1,6 +1,7 @@
 import { Server } from 'socket.io';
 import http from 'http';
 import { db } from './db/dbPostgreSQL';
+import logger from './loggerPino.js';
 
 /*
  rooms is a mapping between users (parameterized by socket ids) and room urls
@@ -39,10 +40,10 @@ export const attachZoomSignalServer = function (httpServer: http.Server) {
   });
 
   io.on('connection', (socket) => {
-    console.log('peer connected to signal server');
+    logger.info('peer connected to signal server');
 
     socket.on('disconnect', (reason) => {
-      console.log(socket.id, 'leaving');
+      logger.info(socket.id, 'leaving');
       for (let roomid in rooms) {
         if (rooms[roomid].has(socket.id)) {
           rooms[roomid].delete(socket.id);
@@ -91,14 +92,14 @@ export const attachZoomSignalServer = function (httpServer: http.Server) {
     // forwards sdp information from sender to receiver
     // TODO: payload type is SdpType in Zoom.tsx
     socket.on('offer', (payload) => {
-      console.log('offer forwarded');
+      logger.info('offer forwarded');
       io.to(payload.target).emit('offer', payload);
     });
     // forwards sdp information from sender to receiver
     // Note this is the same type as payload in offer event
     // TODO: payload type is SdpType in Zoom.tsx
     socket.on('answer', (payload) => {
-      console.log('answer');
+      logger.info('answer');
       io.to(payload.target).emit('answer', payload);
     });
 
