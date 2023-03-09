@@ -14,7 +14,8 @@ test('text is shared across browsers', async ({ context }) => {
     page1.getByText('Nobody here! You should create a new room instead')
   ).toHaveCount(1);
 
-  // // This test does not work, probably because user needs to accept webcam to join room. Need to create mock
+  // // This test does not work, probably because api fetch is asynchronous so page initially gets 0 rooms, then is refreshed.
+  // // To get this test to work, need to delay before expect
   // // user1 joins room aaa
   // await page2.goto(`${process.env.URL}room/1/aaa`);
   // await page1.goto(`${process.env.URL}lobbyJoinRoom`);

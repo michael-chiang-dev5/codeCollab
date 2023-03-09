@@ -299,3 +299,7 @@
 {"level":30,"time":1678341819882,"pid":2160,"hostname":"michael","msg":"running sql command: "}
 {"level":30,"time":1678341820458,"pid":2160,"hostname":"michael","msg":"running sql command: "}
 {"level":30,"time":1678341820977,"pid":2160,"hostname":"michael","msg":"running sql command: "}
+{"level":30,"time":1678341933187,"pid":3971,"hostname":"michael","msg":"running sql command: "}
+{"level":30,"time":1678341933193,"pid":3971,"hostname":"michael","msg":"server is running on port 8080"}
+{"level":30,"time":1678341946721,"pid":4113,"hostname":"michael","msg":"running sql command: "}
+{"level":30,"time":1678341946726,"pid":4113,"hostname":"michael","msg":"server is running on port 8080"}
