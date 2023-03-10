@@ -25,7 +25,7 @@ const pgQuery = async (
       ? `\'${params[index - 1]}\'`
       : params[index - 1];
   });
-  logger.info('running sql command: ', sqlCommand);
+  logger.info(`running sql command: ${sqlCommand}`);
   // Return the result of the sql query
   const data = await pool.query(text, params);
   const rows = data.rows;

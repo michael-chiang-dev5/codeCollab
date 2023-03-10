@@ -74,6 +74,9 @@ const Zoom = ({ roomid }: { [key: string]: string }) => {
         socketRef.current.on('ice-candidate', (payload: IceCandidateType) => {
           handleNewICECandidateMsg(payload);
         });
+      })
+      .catch((err) => {
+        console.log(() => console.log('webcam never loaded'));
       });
   }, [email]); // we re-run on email change so that the signal server has a fresh name to go with the socket id. Otherwise,
 

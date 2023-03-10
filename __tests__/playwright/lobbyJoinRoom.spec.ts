@@ -14,11 +14,12 @@ test('text is shared across browsers', async ({ context }) => {
     page1.getByText('Nobody here! You should create a new room instead')
   ).toHaveCount(1);
 
-  // // TODO: This test does not work, probably because api fetch is asynchronous so page initially gets 0 rooms, then is refreshed.
-  // // To get this test to work, need to delay before expect
-  // // I tried adding delay with page1.waitForTimeout(), but it didn't work
-  // // user1 joins room aaa
+  // // TODO: This test does not work. page2 correctly visits room/1/aaa, but socket.io never makes a connection with the signal server since headless browser does not have a webcam
+  // // The way we implemented Zoom is that the page attempts to access the webcam, then it makes websocket connection with signal server. If you never load the webcam you don't access the signal server
+  // // Is this desired behavior? See lobbyJoinRoom/README.md for a discussion
+  // //
   // await page2.goto(`${process.env.URL}room/1/aaa`);
+  // await page2.screenshot({ path: 'screenshot.png' });
   // await page1.goto(`${process.env.URL}lobbyJoinRoom`);
   // await expect(page1.getByText('1 users in 1 rooms')).toHaveCount(1);
 

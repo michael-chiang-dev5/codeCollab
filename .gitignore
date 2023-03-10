@@ -12,3 +12,4 @@ nohup.out
 SECRET.md
 src/server/app.log
 src/server/.fuse*
+screenshot.png
