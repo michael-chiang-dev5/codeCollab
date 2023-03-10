@@ -5,6 +5,8 @@
 3. Open a second tab with the same url: https://code-collab.org
 4. You should now be collaborating with yourself! You should see two webcam streams on the bottom, and when you type into the code editor it should appear in the other browser tab.
 
+We have currently disabled sound in video chat in the main room for demo purposes. The reason for this is you get audio feedback when you open up multiple tabs with the audio recorded from the same speaker in each tab. However, sound should be enabled in specific rooms.
+
 # Description
 
 CodeCollab is a platform for practicing DSA with other people (think two-player leetcode). Check it out [here](https://code-collab.org). It has the following features:

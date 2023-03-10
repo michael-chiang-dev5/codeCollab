@@ -6,7 +6,12 @@ import styles from './Zoom.module.css';
 import { RootState } from '../../redux/store';
 import { v4 as uuid } from 'uuid';
 
-const Zoom = ({ roomid }: { [key: string]: string }) => {
+interface ZoomComponent {
+  roomid: string;
+  audioEnabled: boolean;
+}
+
+const Zoom = ({ roomid, audioEnabled = true }: ZoomComponent) => {
   const email = useSelector((state: RootState) => state.user.email);
 
   // useRef is used to access the DOM
@@ -30,7 +35,7 @@ const Zoom = ({ roomid }: { [key: string]: string }) => {
     if (email === null) return;
 
     navigator.mediaDevices // this requires either localhost, or https
-      .getUserMedia({ audio: false, video: true }) // TODO: audio turned off due to feedback for the time being
+      .getUserMedia({ audio: audioEnabled, video: true }) // TODO: audio turned off due to feedback for the time being
       .then((stream) => {
         userStream.current = stream; // this reference is used to send a video to other peer
 

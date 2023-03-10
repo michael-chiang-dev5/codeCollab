@@ -5,7 +5,7 @@
   "main": "src/client/index.ts",
   "scripts": {
     "start": "npx kill-port 8080; NODE_ENV=production nodemon ./src/server/server.ts & npx nodemon node_modules/y-webrtc/bin/server.js ",
-    "dev": "npx kill-port 8080; NODE_ENV=development nodemon ./src/server/server.ts | npx pino-pretty & NODE_ENV=development webpack serve & npx nodemon node_modules/y-webrtc/bin/server.js | npx pino-pretty",
+    "dev": "npx kill-port 8080 4444; NODE_ENV=development nodemon ./src/server/server.ts | npx pino-pretty & NODE_ENV=development webpack serve & npx nodemon node_modules/y-webrtc/bin/server.js | npx pino-pretty",
     "build": "webpack --mode production",
     "test": "jest --verbose --forceExit",
     "test:e2e-prod": "URL=https://code-collab.org/ npx playwright test --project='chromium'; npx playwright show-report",

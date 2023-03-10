@@ -12,9 +12,10 @@ import Zoom from '../Zoom/Zoom';
 interface RoomProps {
   markdownId: string;
   roomid: string;
+  audioEnabled?: boolean;
 }
 
-const Room = ({ markdownId, roomid }: RoomProps) => {
+const Room = ({ markdownId, roomid, audioEnabled = true }: RoomProps) => {
   return (
     <>
       <div className={styles.row}>
@@ -25,7 +26,7 @@ const Room = ({ markdownId, roomid }: RoomProps) => {
           <CollabRepl roomid={roomid} />
         </div>
       </div>
-      <Zoom roomid={roomid} />
+      <Zoom roomid={roomid} audioEnabled={audioEnabled} />
     </>
   );
 };

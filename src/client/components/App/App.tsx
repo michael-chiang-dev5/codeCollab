@@ -97,13 +97,16 @@ function App() {
             />
             <Route
               path="/ComponentZoom"
-              element={<Zoom roomid={'asdf'} cardId={'asdf'} />}
+              element={<Zoom roomid={'asdf'} audioEnabled={false} />}
             />
             <Route
               path="/ComponentCollabRepl"
               element={<CollabRepl roomid="1" cardId="2" />}
             />
-            <Route path="/" element={<Room markdownId="1" roomid="0" />} />
+            <Route
+              path="/"
+              element={<Room markdownId="1" roomid="0" audioEnabled={false} />}
+            />
             <Route path="/lobbyNewRoom" element={<LobbyNewRoom />} />
             <Route path="/lobbyJoinRoom" element={<LobbyJoinRoom />} />
 
