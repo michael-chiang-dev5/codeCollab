@@ -2,9 +2,17 @@
 
 We use docker as part of our CI/CD pipeline. You don't have to do anything special; this document serves as a reference in case in the future we need to modify our docker files.
 
+## Usage
+
+To deploy the app: `nohup sh docker/deployApp.sh &`
+To deploy nginx: `nohup sh docker/deployNginx.sh &`
+
+These scripts should kill previous containers
+
 ## Potential improvements
 
-Currently, docker is only used in production to deploy CodeCollab on AWS. We could also create a docker image with hot reloading for development.
+- Currently, docker is only used in production to deploy CodeCollab on AWS. We could also create a docker image with hot reloading for development.
+- Related to hot reloading, using docker-compose would help for any confusion between vanilla docker (for app) and docker-compose (for nginx)
 
 ## Useful commands
 
