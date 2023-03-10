@@ -6,3 +6,8 @@ sudo docker stop $(sudo docker ps -q --filter ancestor=codecollab-prod )
 sudo docker image rm codecollab-prod -f
 sudo docker build -t codecollab-prod .
 sudo docker run -p 8080:8080 -p 4444:4444 codecollab-prod
+
+# kill nginx docker container, then restart
+sudo kill $(ps auxww | grep 'sudo docker-compose up' | awk '{print $2}'
+cd ../nginx-certbot/
+sudo docker-compose up
